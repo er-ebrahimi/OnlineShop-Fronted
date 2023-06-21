@@ -1,29 +1,19 @@
-import React from "react";
+// import { faTwitter, faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { ReactComponent as IconPhone } from "bootstrap-icons/icons/phone.svg";
+import { ReactComponent as IconShieldLock } from "bootstrap-icons/icons/shield-lock.svg";
+import { required, maxLength20, minLength8, maxLengthMobileNo, minLengthMobileNo, digit, name, email, maxLength1000 } from "../../helpers/validation";
+import renderFormGroupField from "../../helpers/renderFormGroupField";
+import renderFormField from "../../helpers/renderFormField";
 import { Field, reduxForm } from "redux-form";
 import { compose } from "redux";
 import { Link } from "react-router-dom";
-import renderFormGroupField from "../../helpers/renderFormGroupField";
-import renderFormField from "../../helpers/renderFormField";
-import {
-  required,
-  maxLength20,
-  minLength8,
-  maxLengthMobileNo,
-  minLengthMobileNo,
-  digit,
-  name,
-} from "../../helpers/validation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTwitter,
-  faFacebookF,
-  faGoogle,
-} from "@fortawesome/free-brands-svg-icons";
-import { ReactComponent as IconPhone } from "bootstrap-icons/icons/phone.svg";
-import { ReactComponent as IconShieldLock } from "bootstrap-icons/icons/shield-lock.svg";
+import { useNavigate } from "react-router-dom";
+import React from "react";
 
 const SignUpForm = (props) => {
   const { handleSubmit, submitting, onSubmit, submitFailed } = props;
+  
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -33,7 +23,7 @@ const SignUpForm = (props) => {
       <div className="row mb-3">
         <div className="col-md-6">
           <Field
-            name="firstName"
+            name="first_name"
             type="text"
             label="First Name"
             component={renderFormField}
@@ -44,7 +34,7 @@ const SignUpForm = (props) => {
         </div>
         <div className="col-md-6">
           <Field
-            name="lastName"
+            name="last_name"
             type="text"
             label="Last Name"
             component={renderFormField}
@@ -54,24 +44,22 @@ const SignUpForm = (props) => {
           />
         </div>
       </div>
+
       <Field
-        name="mobileNo"
-        type="number"
-        label="Mobile no"
-        component={renderFormGroupField}
-        placeholder="Mobile no without country code"
-        icon={IconPhone}
-        validate={[required, maxLengthMobileNo, minLengthMobileNo, digit]}
+        name="email"
+        type="email"
+        label="Email"
+        component={renderFormField}
+        placeholder="Email"
+        validate={[required, email]}
         required={true}
-        max="999999999999999"
-        min="9999"
-        className="mb-3"
       />
+
       <Field
         name="password"
         type="password"
         label="Your password"
-        component={renderFormGroupField}
+        component={renderFormField}
         placeholder="******"
         icon={IconShieldLock}
         validate={[required, maxLength20, minLength8]}
@@ -80,7 +68,49 @@ const SignUpForm = (props) => {
         minLength="8"
         className="mb-3"
       />
-      <div className="d-grid">
+
+      <Field
+        name="username"
+        type="text"
+        label="Username"
+        component={renderFormField}
+        placeholder="Username"
+        validate={[required, maxLength20]}
+        required={true}
+      />
+
+      <Field
+        name="birthday"
+        type="date"
+        label="Birthday"
+        component={renderFormField}
+        validate={[required]}
+        required={true}
+      />
+
+      <Field
+        name="gender"
+        type="gender"
+        label="Gender"
+        component={renderFormField}
+        validate={[required]}
+        required={true}
+      />
+
+      
+
+      <Field
+        name="bio"
+        type="textarea"
+        label="Bio"
+        component={renderFormField}
+        placeholder="Tell us a little about yourself"
+        validate={[required, maxLength1000]}
+        required={true}
+        rows="3"
+      />
+
+      <div className="d-grid mt-3">
         <button
           type="submit"
           className="btn btn-primary mb-3"
@@ -107,13 +137,13 @@ const SignUpForm = (props) => {
         </div>
         <div className="col- text-center">
           <Link to="/" className="btn btn-light text-white bg-twitter me-3">
-            <FontAwesomeIcon icon={faTwitter} />
+            {/* <FontAwesomeIcon icon={faTwitter} /> */}
           </Link>
           <Link to="/" className="btn btn-light text-white me-3 bg-facebook">
-            <FontAwesomeIcon icon={faFacebookF} className="mx-1" />
+            {/* <FontAwesomeIcon icon={faFacebookF} className="mx-1" /> */}
           </Link>
           <Link to="/" className="btn btn-light text-white me-3 bg-google">
-            <FontAwesomeIcon icon={faGoogle} className="mx-1" />
+            {/* <FontAwesomeIcon icon={faGoogle} className="mx-1" /> */}
           </Link>
         </div>
       </div>

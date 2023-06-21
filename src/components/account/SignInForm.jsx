@@ -10,6 +10,7 @@ import {
   maxLengthMobileNo,
   minLengthMobileNo,
   digit,
+  email
 } from "../../helpers/validation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,6 +20,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { ReactComponent as IconPhone } from "bootstrap-icons/icons/phone.svg";
 import { ReactComponent as IconShieldLock } from "bootstrap-icons/icons/shield-lock.svg";
+import renderFormField from "../../helpers/renderFormField";
 
 const SignInForm = (props) => {
   const { handleSubmit, submitting, onSubmit, submitFailed } = props;
@@ -29,17 +31,13 @@ const SignInForm = (props) => {
       noValidate
     >
       <Field
-        name="mobileNo"
-        type="number"
-        label="Mobile no"
-        component={renderFormGroupField}
-        placeholder="Mobile no without country code"
-        icon={IconPhone}
-        validate={[required, maxLengthMobileNo, minLengthMobileNo, digit]}
+        name="email"
+        type="email"
+        label="Email"
+        component={renderFormField}
+        placeholder="Email"
+        validate={[required, email]}
         required={true}
-        max="999999999999999"
-        min="9999"
-        className="mb-3"
       />
       <Field
         name="password"
