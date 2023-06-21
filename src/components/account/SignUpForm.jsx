@@ -115,6 +115,7 @@ const SignUpForm = (props) => {
           type="submit"
           className="btn btn-primary mb-3"
           disabled={submitting}
+          onClick={console.log("clicked")}
         >
           Create
         </button>

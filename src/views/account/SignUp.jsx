@@ -6,15 +6,15 @@ const SingUpForm = lazy(() => import("../../components/account/SignUpForm"));
 
 function SignUpView() {
   const Navigate = useNavigate();
+  axios.defaults.headers.post['Content-Type'] = 'application/json';
   const onSubmit = async (values) => {
-    Navigate("/account/signin");
+    console.log("sgin in");
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://141.11.107.63:8081/user/signup/',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
+      url: 'http://141.11.107.63:8080/user/signup/',
+      withcredentials: true,
+      
       data : JSON.stringify(values)
     };
     
@@ -22,10 +22,11 @@ function SignUpView() {
     .then((response) => {
       console.log(JSON.stringify(response.data));
       console.log("login");
-
+      Navigate("/account/signin");
+      
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
       alert("error");
     });
   };
@@ -53,6 +54,9 @@ function SignUpView() {
           <h4 className="text-center">Sign Up</h4>
           <SingUpForm onSubmit={onSubmit} />
         </div>
+        {/* <div>
+          hello
+        </div> */}
       </div>
     </div>
   );

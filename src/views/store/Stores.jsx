@@ -2,6 +2,7 @@ import React, { lazy, Component } from "react";
 import { data } from "../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTh, faBars } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 // import Addproduct from "../cart/Addproduct";
 // import SignUpForm from "../../components/account/SignUpForm";
 const Paging = lazy(() => import("../../components/Paging"));
@@ -15,15 +16,14 @@ const FilterTag = lazy(() => import("../../components/filter/Tag"));
 const FilterClear = lazy(() => import("../../components/filter/Clear"));
 const CardServices = lazy(() => import("../../components/card/CardServices"));
 const CardProductGrid = lazy(() =>
-  import("../../components/card/CardProductGrid")
+  import("../../components/card/CardStore")
 );
 const CardProductList = lazy(() =>
   import("../../components/card/CardProductList")
 );
 // const SingUpForm = lazy(() => import("../../components/account/SignUpForm"));
 const AddProduct = lazy(() => import("../cart/AddProduct"));
-
-class MyProducts extends Component {
+class Stores extends Component {
   state = {
     currentProducts: [],
     currentPage: null,
@@ -32,6 +32,25 @@ class MyProducts extends Component {
     view: "list",
   };
   onSubmit = async (values) => {
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://141.11.107.63:8080/store/create/",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify(values),
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     
   };
 
@@ -53,12 +72,29 @@ class MyProducts extends Component {
   };
 
   getProducts = () => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://141.11.107.63:8080/store/list/',
+      withcredentials: true,
+      
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      console.log("shop");
+      
+    })
+    .catch((error) => {
+      console.error(error);
+      // alert("error");
+    });
     let products = data.products;
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
+    // products = products.concat(products);
+    // products = products.concat(products);
+    // products = products.concat(products);
+    // products = products.concat(products);
+    // products = products.concat(products);
     return products;
   };
 
@@ -74,14 +110,14 @@ class MyProducts extends Component {
         >
           <div className="container text-center">
             <span className="display-5 px-3 bg-white rounded shadow">
-              Your Products
+              Stores
             </span>
           </div>
         </div>
         <Breadcrumb />
         <div className="container-fluid mb-3">
           <div className="row">
-            <div className="col-md-3">
+          <div className="col-md-3">
               <div className="card mb-3">
                 <div className="card-header">
                   <span className="align-middle">Add card</span>
@@ -91,7 +127,7 @@ class MyProducts extends Component {
               </div>
             </div>
             <div className="col-md-9">
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-7">
                   <span className="align-middle fw-bold">
                     {this.state.totalItems} results for{" "}
@@ -136,10 +172,10 @@ class MyProducts extends Component {
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <hr />
               <div className="row g-3">
-                {this.state.view === "grid" &&
+                {
                   this.state.currentProducts.map((product, idx) => {
                     return (
                       <div key={idx} className="col-md-4">
@@ -147,14 +183,14 @@ class MyProducts extends Component {
                       </div>
                     );
                   })}
-                {this.state.view === "list" &&
+                {/* {this.state.view === "list" &&
                   this.state.currentProducts.map((product, idx) => {
                     return (
                       <div key={idx} className="col-md-12">
                         <CardProductList data={product} />
                       </div>
                     );
-                  })}
+                  })} */}
               </div>
               <hr />
               <Paging
@@ -173,4 +209,4 @@ class MyProducts extends Component {
   }
 }
 
-export default MyProducts;
+export default Stores;
