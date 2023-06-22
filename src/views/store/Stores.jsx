@@ -3,8 +3,6 @@ import { data } from "../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTh, faBars } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-// import Addproduct from "../cart/Addproduct";
-// import SignUpForm from "../../components/account/SignUpForm";
 const Paging = lazy(() => import("../../components/Paging"));
 const Breadcrumb = lazy(() => import("../../components/Breadcrumb"));
 const FilterCategory = lazy(() => import("../../components/filter/Category"));
@@ -21,7 +19,6 @@ const CardProductGrid = lazy(() =>
 const CardProductList = lazy(() =>
   import("../../components/card/CardProductList")
 );
-// const SingUpForm = lazy(() => import("../../components/account/SignUpForm"));
 const AddProduct = lazy(() => import("../cart/AddProduct"));
 class Stores extends Component {
   state = {
@@ -32,7 +29,7 @@ class Stores extends Component {
     view: "list",
   };
   onSubmit = async (values) => {
-
+    console.log("value",values)
     let config = {
       method: "post",
       maxBodyLength: Infinity,

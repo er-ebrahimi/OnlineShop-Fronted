@@ -31,12 +31,12 @@ const SignInForm = (props) => {
       noValidate
     >
       <Field
-        name="email"
+        name="username"
         type="email"
         label="Email"
         component={renderFormField}
         placeholder="Email"
-        validate={[required, email]}
+        validate={[required]}
         required={true}
       />
       <Field

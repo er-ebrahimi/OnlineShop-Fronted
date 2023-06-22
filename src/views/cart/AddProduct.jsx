@@ -24,25 +24,41 @@ import renderFormField from "../../helpers/renderFormField";
 
 const AddProduct = (props) => {
   const { handleSubmit, submitting, onSubmit, submitFailed } = props;
-  const [imageURLs, setlmageURLs] = React.useState([]);
-  const [images, setInages] = React.useState([]);
+  const [imageURLs, setlmageURLs] = React.useState("");
+  const [images, setImages] = React.useState("");
   function onImageChange(event) {
     if (event.target.files && event.target.files[0]) {
-      setInages([...images, event.target.files[0]]);
+      console.log("event.target.files", event.target.files);
+      setImages(event.target.files[0]);
     }
     console.log("image", images)
   }
   React.useEffect(() => {
-    if (images.length < 1) return;
-    const newlmageUrls = [];
-    images.forEach ( image => newlmageUrls.push ( URL.createObjectURL( image) ) ) ;
-    setlmageURLs(newlmageUrls) ;
+    // if (images.length < 1) return;
+    // const newlmageUrls = [];
+    // images.forEach ( image => newlmageUrls.push ( URL.createObjectURL( image) ) ) ;
+    setlmageURLs(images) ;
+    console.log("imageURLs", images)
   },[images]);
   const renderImageField = ({ input, meta, ...props }) => {
+    const onChange = (event) => {
+      console.log(event.target.files[0])
+      onImageChange(event);
+    };
     const { touched, error } = meta;
     return (
       <div>
-        <input type="file" multiple accept="image/*" onChange={onImageChange} />
+        <input
+        {...input}
+          id="file-input"
+          type="file"
+          onChange={onChange}
+          style={{ display: "none" }}
+        />
+        <label id="file-input-label" for="file-input" className="btn btn-primary mt-3">
+          Select a File
+        </label>
+        {images.length !== "" ? images.name : ""}
         {touched && error && <span>{error}</span>}
         {/* {imageURLs.map(imageSrc => <img src={imageSrc}/>)} */}
         {/* {getImageListItemBarUtilityClass.map(imageSrc => (<img src=""/>))} */}
@@ -78,7 +94,7 @@ const AddProduct = (props) => {
         type="file"
         label="Image"
         component={renderImageField}
-        validate={[required]}
+        validate={[]}
         required={true}
       />
       <div className="d-grid mt-4">
@@ -86,6 +102,7 @@ const AddProduct = (props) => {
           type="submit"
           className="btn btn-primary mb-3"
           disabled={submitting}
+          // onClick={console.log("hello")}
         >
           Create
         </button>
