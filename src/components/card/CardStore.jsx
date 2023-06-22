@@ -8,7 +8,10 @@ const CardStore = (props) => {
   const product = props.data;
   return (
     <div className="card">
-      <img src={product.img} className="card-img-top" alt="..." />
+      <div style={{height:"8rem"}} className="d-flex justify-content-center">
+      <img  src={product.image} className="card-img-top m-auto" style={{height:"100%", width:"11.5rem"}} alt="..." />
+
+      </div>
       {/* {product.isNew && (
         <span className="badge bg-success position-absolute mt-2 ms-2">
           New
@@ -32,13 +35,13 @@ const CardStore = (props) => {
         </span>
       )} */}
       <div className="card-body">
-        {/* <h6 className="card-subtitle mb-2">
-          <Link to={product.link} className="text-decoration-none">
+        <h6 className="card-subtitle mb-2">
+          <h2  className="text-decoration-none fw-bold">
             {product.name}
-          </Link>
-        </h6> */}
-        {/* <div className="my-2">
-          <span className="fw-bold h5">${product.price}</span>
+          </h2>
+        </h6>
+        <div className="my-2">
+          <span className=" h5">{product.bio}</span>
           {product.originPrice > 0 && (
             <del className="small text-muted ms-2">${product.originPrice}</del>
           )}
@@ -47,10 +50,10 @@ const CardStore = (props) => {
               <IconStarFill className="text-warning me-1" key={key} />
             ))}
           </span>
-        </div> */}
+        </div>
         <div className="btn-group  d-flex" role="group">
           <Link
-            to={product.link}
+            to={"/"}
             className="btn btn-sm btn-primary"
           >
             Add product

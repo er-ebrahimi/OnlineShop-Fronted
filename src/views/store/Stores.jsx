@@ -14,9 +14,7 @@ const FilterColor = lazy(() => import("../../components/filter/Color"));
 const FilterTag = lazy(() => import("../../components/filter/Tag"));
 const FilterClear = lazy(() => import("../../components/filter/Clear"));
 const CardServices = lazy(() => import("../../components/card/CardServices"));
-const CardProductGrid = lazy(() =>
-  import("../../components/card/CardStore")
-);
+const CardProductGrid = lazy(() => import("../../components/card/CardStore"));
 const CardProductList = lazy(() =>
   import("../../components/card/CardProductList")
 );
@@ -29,29 +27,43 @@ class Stores extends Component {
     totalItems: 0,
     view: "list",
     image: "",
+    imageURLs: "",
   };
   onSubmit = async (values) => {
-    console.log("shop",JSON.stringify(values))
-    console.log("image",this.state.image)
+    console.log("image", this.state.image);
+    console.log("image type", typeof this.state.image);
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("bio", values.Info);
+    formData.append("address", values.address);
+    formData.append("image", this.state.image);
+    console.log("formData", formData.image);
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    console.log("token", token);
+
     let config = {
-      method: "post",
-      maxBodyLength: Infinity,
+      method: "post", // changed from get to post
+      maxContentLength: Infinity, // changed from maxBodyLength to maxContentLength
       url: apis["store"]["create"],
       headers: {
-        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data", // added content type header
       },
-      data: JSON.stringify(values),
+      data: formData,
     };
 
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
+        this.onProductsChanged(response.data);
+
       })
       .catch((error) => {
         console.log(error);
       });
-    
   };
 
   UNSAFE_componentWillMount() {
@@ -59,12 +71,44 @@ class Stores extends Component {
     this.setState({ totalItems });
   }
 
-  onPageChanged = (page) => {
+  onProductsChanged = (currentProducts) => {
+    this.setState({
+      currentProducts: [...this.state.currentProducts,currentProducts]
+       });
+  };
+
+  onPageChanged = async (page) =>  {
     let products = this.getProducts();
-    const { currentPage, totalPages, pageLimit } = page;
-    const offset = (currentPage - 1) * pageLimit;
-    const currentProducts = products.slice(offset, offset + pageLimit);
-    this.setState({ currentPage, currentProducts, totalPages });
+    // console.log("products", products)
+    // console.log("page", page)
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: apis["store"]["list"],
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        products = response.data;
+        console.log("stores",response.data);
+        const { currentPage, totalPages, pageLimit } = page;
+        const offset = (currentPage - 1) * pageLimit;
+        const currentProducts = products.slice(offset, offset + pageLimit);
+        // console.log("currentProducts", currentProducts);
+        this.setState({ currentPage, currentProducts, totalPages });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   onChangeView = (view) => {
@@ -75,43 +119,44 @@ class Stores extends Component {
     this.setState({ image });
     console.log("change image", image);
   };
-
+  
   getProducts = () => {
+    let products = data.products;
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
-    console.log("token",token)
+    console.log("token", token);
     let config = {
-      method: 'get',
+      method: "get",
       maxBodyLength: Infinity,
-      url: 'http://141.11.107.63:8080/store/list/',
-      headers: { 
-        'Authorization': 'Bearer '+token,
+      url: apis["store"]["list"],
+      headers: {
+        Authorization: "Bearer " + token,
       },
-      data : data
+      data: data,
     };
-    
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    let products = data.products;
-    // products = products.concat(products);
-    // products = products.concat(products);
-    // products = products.concat(products);
-    // products = products.concat(products);
-    // products = products.concat(products);
+
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(JSON.stringify(response.data));
+        products = JSON.stringify(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    products = products.concat(products);
+    products = products.concat(products);
+    products = products.concat(products);
+    products = products.concat(products);
+    products = products.concat(products);
     return products;
   };
-
 
   render() {
     return (
       <React.Fragment>
-        
+        {/* <img src={"http://141.11.107.63:8080/store_images/1_ULW0Mxk.jpg"}/> */}
         <div
           className="p-5 bg-primary bs-cover"
           style={{
@@ -127,12 +172,15 @@ class Stores extends Component {
         <Breadcrumb />
         <div className="container-fluid mb-3">
           <div className="row">
-          <div className="col-md-3">
+            <div className="col-md-3">
               <div className="card mb-3">
                 <div className="card-header">
                   <span className="align-middle">Add card</span>
-                  
-                   <AddProduct onSubmit={this.onSubmit} onChangeImage={this.onChangeImage} />
+
+                  <AddProduct
+                    onSubmit={this.onSubmit}
+                    onChangeImage={this.onChangeImage}
+                  />
                 </div>
               </div>
             </div>
@@ -185,14 +233,13 @@ class Stores extends Component {
               </div> */}
               <hr />
               <div className="row g-3">
-                {
-                  this.state.currentProducts.map((product, idx) => {
-                    return (
-                      <div key={idx} className="col-md-4">
-                        <CardProductGrid data={product} />
-                      </div>
-                    );
-                  })}
+                {this.state.currentProducts.map((product, idx) => {
+                  return (
+                    <div key={idx} className="col-md-4">
+                      <CardProductGrid data={product} />
+                    </div>
+                  );
+                })}
                 {/* {this.state.view === "list" &&
                   this.state.currentProducts.map((product, idx) => {
                     return (

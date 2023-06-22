@@ -75,7 +75,7 @@ const AddProduct = (props) => {
       noValidate
     >
       <Field
-        name="Name"
+        name="name"
         type="Name"
         label="Name"
         component={renderFormField}
@@ -89,6 +89,15 @@ const AddProduct = (props) => {
         label="Info"
         component={renderFormField}
         placeholder="Info"
+        validate={[required]}
+        required={true}
+      />
+      <Field
+        name="address"
+        type="address"
+        label="address"
+        component={renderFormField}
+        placeholder="address"
         validate={[required]}
         required={true}
       />
