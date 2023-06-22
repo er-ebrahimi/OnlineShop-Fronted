@@ -4,19 +4,19 @@ import { ReactComponent as IconStarFill } from "bootstrap-icons/icons/star-fill.
 import { ReactComponent as IconTruckFill } from "bootstrap-icons/icons/truck.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
-
+import { apis } from "../API/api";
 const CardProductList = (props) => {
   const product = props.data;
   return (
     <div className="card">
       <div className="row g-0">
         <div className="col-md-3 text-center">
-          <img src={product.img} className="img-fluid" alt="..." />
+          <img src={product.image} className="img-fluid" alt="..." />
         </div>
         <div className="col-md-6">
           <div className="card-body">
             <h6 className="card-subtitle me-2 d-inline">
-              <Link to={product.link} className="text-decoration-none">
+              <Link to={apis["product"]["product"] + product.id} className="text-decoration-none">
                 {product.name}
               </Link>
             </h6>
@@ -38,13 +38,13 @@ const CardProductList = (props) => {
                     );
                 })}
             </div>
-            {product.description &&
-              product.description.includes("|") === false && (
-                <p className="small mt-2">{product.description}</p>
+            {product.bio &&
+              product.bio.includes("|") === false && (
+                <p className="small mt-2">{product.bio}</p>
               )}
-            {product.description && product.description.includes("|") && (
+            {product.bio && product.bio.includes("|") && (
               <ul className="mt-2">
-                {product.description.split("|").map((desc, idx) => (
+                {product.bio.split("|").map((desc, idx) => (
                   <li key={idx}>{desc}</li>
                 ))}
               </ul>

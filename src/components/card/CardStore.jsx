@@ -3,9 +3,38 @@ import { Link } from "react-router-dom";
 import { ReactComponent as IconStarFill } from "bootstrap-icons/icons/star-fill.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "axios";
+import { apis } from "../API/api";
 const CardStore = (props) => {
   const product = props.data;
+  const onProductsDeleted = props.onProductsDeleted;
+  const deleteStore = async (values) => {
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+
+    let config = {
+      method: "delete", // changed from get to post
+      maxContentLength: Infinity, // changed from maxBodyLength to maxContentLength
+      url: apis["store"]["delete"]+values.id+"/",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data", // added content type header
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log("id",product.id);
+        onProductsDeleted(product.id);
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="card">
       <div style={{height:"8rem"}} className="d-flex justify-content-center">
@@ -53,11 +82,12 @@ const CardStore = (props) => {
         </div>
         <div className="btn-group  d-flex" role="group">
           <Link
-            to={"/"}
+            to={"/myproducts/" + product.id}
             className="btn btn-sm btn-primary"
           >
-            Add product
+            Add 
           </Link>
+        <button className="btn btn-danger btn-sm" onClick={()=>{deleteStore(product)}}>delete</button>
           
         </div>
       </div>

@@ -22,7 +22,7 @@ import { ReactComponent as IconPhone } from "bootstrap-icons/icons/phone.svg";
 import { ReactComponent as IconShieldLock } from "bootstrap-icons/icons/shield-lock.svg";
 import renderFormField from "../../helpers/renderFormField";
 
-const AddProduct = (props) => {
+const AddStore = (props) => {
   const { handleSubmit, submitting, onSubmit, submitFailed, onChangeImage } = props;
   // console.log("props",props)
   const [imageURLs, setlmageURLs] = React.useState("");
@@ -84,39 +84,21 @@ const AddProduct = (props) => {
         required={true}
       />
       <Field
-        name="bio"
-        type="bio"
-        label="bio"
+        name="Info"
+        type="Info"
+        label="Info"
         component={renderFormField}
-        placeholder="bio"
+        placeholder="Info"
         validate={[required]}
         required={true}
       />
       <Field
-        name="type"
-        type="type"
-        label="type"
+        name="address"
+        type="address"
+        label="address"
         component={renderFormField}
-        placeholder="type"
+        placeholder="address"
         validate={[required]}
-        required={true}
-      />
-      <Field
-        name="amount"
-        type="number"
-        label="amount"
-        component={renderFormField}
-        placeholder="amount"
-        validate={[required, digit]}
-        required={true}
-      />
-      <Field
-        name="price"
-        type="number"
-        label="price"
-        component={renderFormField}
-        placeholder="price"
-        validate={[required, digit]}
         required={true}
       />
       <Field
@@ -146,4 +128,4 @@ export default compose(
   reduxForm({
     form: "signin",
   })
-)(AddProduct);
+)(AddStore);

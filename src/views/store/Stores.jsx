@@ -14,11 +14,12 @@ const FilterColor = lazy(() => import("../../components/filter/Color"));
 const FilterTag = lazy(() => import("../../components/filter/Tag"));
 const FilterClear = lazy(() => import("../../components/filter/Clear"));
 const CardServices = lazy(() => import("../../components/card/CardServices"));
-const CardProductGrid = lazy(() => import("../../components/card/CardStore"));
+const CardStore = lazy(() => import("../../components/card/CardStore"));
 const CardProductList = lazy(() =>
   import("../../components/card/CardProductList")
 );
-const AddProduct = lazy(() => import("../cart/AddProduct"));
+// import AddStore from "./AddStore";
+const AddStore = lazy(() => import("./AddStore"));
 class Stores extends Component {
   state = {
     currentProducts: [],
@@ -41,7 +42,7 @@ class Stores extends Component {
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
-    console.log("token", token);
+    // console.log("token", token);
 
     let config = {
       method: "post", // changed from get to post
@@ -59,7 +60,6 @@ class Stores extends Component {
       .then((response) => {
         console.log(response);
         this.onProductsChanged(response.data);
-
       })
       .catch((error) => {
         console.log(error);
@@ -73,11 +73,20 @@ class Stores extends Component {
 
   onProductsChanged = (currentProducts) => {
     this.setState({
-      currentProducts: [...this.state.currentProducts,currentProducts]
-       });
+      currentProducts: [...this.state.currentProducts, currentProducts],
+    });
   };
 
-  onPageChanged = async (page) =>  {
+  onProductsDeleted = (id) => {
+    console.log("currentProducts", this.state.currentProducts);
+    const currentProducts = this.state.currentProducts.filter(
+      (product) => product.id !== id
+    );
+    this.setState({ currentProducts });
+    console.log("currentProducts", this.state.currentProducts);
+  };
+
+  onPageChanged = async (page) => {
     let products = this.getProducts();
     // console.log("products", products)
     // console.log("page", page)
@@ -99,7 +108,7 @@ class Stores extends Component {
       .request(config)
       .then((response) => {
         products = response.data;
-        console.log("stores",response.data);
+        // console.log("stores",response.data);
         const { currentPage, totalPages, pageLimit } = page;
         const offset = (currentPage - 1) * pageLimit;
         const currentProducts = products.slice(offset, offset + pageLimit);
@@ -119,13 +128,13 @@ class Stores extends Component {
     this.setState({ image });
     console.log("change image", image);
   };
-  
+
   getProducts = () => {
     let products = data.products;
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
-    console.log("token", token);
+    // console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -140,7 +149,7 @@ class Stores extends Component {
       .request(config)
       .then((response) => {
         // console.log(JSON.stringify(response.data));
-        products = JSON.stringify(response.data)
+        products = JSON.stringify(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -177,7 +186,7 @@ class Stores extends Component {
                 <div className="card-header">
                   <span className="align-middle">Add card</span>
 
-                  <AddProduct
+                  <AddStore
                     onSubmit={this.onSubmit}
                     onChangeImage={this.onChangeImage}
                   />
@@ -236,7 +245,10 @@ class Stores extends Component {
                 {this.state.currentProducts.map((product, idx) => {
                   return (
                     <div key={idx} className="col-md-4">
-                      <CardProductGrid data={product} />
+                      <CardStore
+                        data={product}
+                        onProductsDeleted={this.onProductsDeleted}
+                      />
                     </div>
                   );
                 })}

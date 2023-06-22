@@ -5,5 +5,11 @@ export const apis = {
     "store" : {
         "create" : `${domain}/store/create/`,
         "list" : `${domain}/store/list/`,
-    }
+        "delete" : `${domain}/store/delete/`,
+    },
+    "product" : {
+        "product" : `${domain}/product/`,
+        "create" : `${domain}/product/create/`,
+        "list" : `${domain}/product/list/`,
+    },
 }

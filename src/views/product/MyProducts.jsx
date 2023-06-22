@@ -2,6 +2,9 @@ import React, { lazy, Component } from "react";
 import { data } from "../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTh, faBars } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { apis } from "../../components/API/api";
+import { withHooksHOC } from "../../functions/MyProductsFunc";
 // import Addproduct from "../cart/Addproduct";
 // import SignUpForm from "../../components/account/SignUpForm";
 const Paging = lazy(() => import("../../components/Paging"));
@@ -30,9 +33,46 @@ class MyProducts extends Component {
     totalPages: null,
     totalItems: 0,
     view: "list",
+    image: "",
+    imageURLs: "",
   };
   onSubmit = async (values) => {
-    
+    console.log("image", this.state.image);
+    console.log("image type", typeof this.state.image);
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("bio", values.bio);
+    formData.append("address", values.type);
+    formData.append("price", values.price);
+    formData.append("amount", values.amount);
+    formData.append("image", this.state.image);
+    console.log("formData", formData);
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+
+    let config = {
+      method: "post", // changed from get to post
+      maxContentLength: Infinity, // changed from maxBodyLength to maxContentLength
+      url: apis["product"]["create"] + this.props.param.id + '/',
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data", // added content type header
+      },
+      data: formData,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response);
+        this.onProductsChanged(response.data);
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   UNSAFE_componentWillMount() {
@@ -40,20 +80,83 @@ class MyProducts extends Component {
     this.setState({ totalItems });
   }
 
-  onPageChanged = (page) => {
+  onProductsChanged = (currentProducts) => {
+    console.log("currentProducts1", currentProducts);
+    this.setState({
+      currentProducts: [...this.state.currentProducts,currentProducts]
+       });
+    console.log("currentProducts2", currentProducts);
+  };
+
+  onPageChanged = async (page) =>  {
     let products = this.getProducts();
-    const { currentPage, totalPages, pageLimit } = page;
-    const offset = (currentPage - 1) * pageLimit;
-    const currentProducts = products.slice(offset, offset + pageLimit);
-    this.setState({ currentPage, currentProducts, totalPages });
+    // console.log("products", products)
+    // console.log("page", page)
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      // url: apis["product"]["list"]+ this.props.param.id + '/',
+      url: apis["product"]["list"],  
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        products = response.data;
+        // console.log("stores",response.data);
+        const { currentPage, totalPages, pageLimit } = page;
+        const offset = (currentPage - 1) * pageLimit;
+        const currentProducts = products.slice(offset, offset + pageLimit);
+        // console.log("currentProducts", currentProducts);
+        this.setState({ currentPage, currentProducts, totalPages });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   onChangeView = (view) => {
     this.setState({ view });
   };
 
+  onChangeImage = (image) => {
+    this.setState({ image });
+    console.log("change image", image);
+  };
+  
   getProducts = () => {
     let products = data.products;
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: apis["store"]["list"],
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(JSON.stringify(response.data));
+        products = JSON.stringify(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     products = products.concat(products);
     products = products.concat(products);
     products = products.concat(products);
@@ -63,9 +166,11 @@ class MyProducts extends Component {
   };
 
 
+
   render() {
     return (
       <React.Fragment>
+        {console.log("param" , this.props.param)}
         <div
           className="p-5 bg-primary bs-cover"
           style={{
@@ -86,7 +191,7 @@ class MyProducts extends Component {
                 <div className="card-header">
                   <span className="align-middle">Add card</span>
                   
-                   <AddProduct onSubmit={this.onSubmit} />
+                   <AddProduct onChangeImage={this.onChangeImage} onSubmit={this.onSubmit} />
                 </div>
               </div>
             </div>
@@ -173,4 +278,4 @@ class MyProducts extends Component {
   }
 }
 
-export default MyProducts;
+export default withHooksHOC(MyProducts);
