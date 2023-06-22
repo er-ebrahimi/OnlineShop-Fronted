@@ -31,7 +31,7 @@ const SignInForm = (props) => {
       noValidate
     >
       <Field
-        name="username"
+        name="email"
         type="email"
         label="Email"
         component={renderFormField}

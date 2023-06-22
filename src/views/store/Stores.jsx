@@ -3,6 +3,7 @@ import { data } from "../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTh, faBars } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { apis } from "../../components/API/api";
 const Paging = lazy(() => import("../../components/Paging"));
 const Breadcrumb = lazy(() => import("../../components/Breadcrumb"));
 const FilterCategory = lazy(() => import("../../components/filter/Category"));
@@ -27,13 +28,15 @@ class Stores extends Component {
     totalPages: null,
     totalItems: 0,
     view: "list",
+    image: "",
   };
   onSubmit = async (values) => {
-    console.log("value",values)
+    console.log("shop",JSON.stringify(values))
+    console.log("image",this.state.image)
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://141.11.107.63:8080/store/create/",
+      url: apis["store"]["create"],
       headers: {
         "Content-Type": "application/json",
       },
@@ -68,23 +71,32 @@ class Stores extends Component {
     this.setState({ view });
   };
 
+  onChangeImage = (image) => {
+    this.setState({ image });
+    console.log("change image", image);
+  };
+
   getProducts = () => {
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    console.log("token",token)
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
       url: 'http://141.11.107.63:8080/store/list/',
-      withcredentials: true,
-      
+      headers: { 
+        'Authorization': 'Bearer '+token,
+      },
+      data : data
     };
     
     axios.request(config)
     .then((response) => {
-      console.log("shop");
-      
+      console.log(JSON.stringify(response.data));
     })
     .catch((error) => {
-      console.error(error);
-      // alert("error");
+      console.log(error);
     });
     let products = data.products;
     // products = products.concat(products);
@@ -99,6 +111,7 @@ class Stores extends Component {
   render() {
     return (
       <React.Fragment>
+        
         <div
           className="p-5 bg-primary bs-cover"
           style={{
@@ -119,7 +132,7 @@ class Stores extends Component {
                 <div className="card-header">
                   <span className="align-middle">Add card</span>
                   
-                   <AddProduct onSubmit={this.onSubmit} />
+                   <AddProduct onSubmit={this.onSubmit} onChangeImage={this.onChangeImage} />
                 </div>
               </div>
             </div>

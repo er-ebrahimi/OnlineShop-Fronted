@@ -23,13 +23,16 @@ import { ReactComponent as IconShieldLock } from "bootstrap-icons/icons/shield-l
 import renderFormField from "../../helpers/renderFormField";
 
 const AddProduct = (props) => {
-  const { handleSubmit, submitting, onSubmit, submitFailed } = props;
+  const { handleSubmit, submitting, onSubmit, submitFailed, onChangeImage } = props;
+  console.log("props",props)
   const [imageURLs, setlmageURLs] = React.useState("");
   const [images, setImages] = React.useState("");
-  function onImageChange(event) {
+  function onImageChangeForm(event) {
     if (event.target.files && event.target.files[0]) {
       console.log("event.target.files", event.target.files);
       setImages(event.target.files[0]);
+      console.log("hello image", images)
+      onChangeImage(event.target.files[0]);
     }
     console.log("image", images)
   }
@@ -43,7 +46,7 @@ const AddProduct = (props) => {
   const renderImageField = ({ input, meta, ...props }) => {
     const onChange = (event) => {
       console.log(event.target.files[0])
-      onImageChange(event);
+      onImageChangeForm(event);
     };
     const { touched, error } = meta;
     return (

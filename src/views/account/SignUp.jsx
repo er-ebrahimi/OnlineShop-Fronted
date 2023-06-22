@@ -1,7 +1,7 @@
 import React, { lazy } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; 
-
+import {apis} from "../../components/API/api";
 const SingUpForm = lazy(() => import("../../components/account/SignUpForm"));
 
 function SignUpView() {
@@ -12,7 +12,7 @@ function SignUpView() {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://141.11.107.63:8080/user/signup/',
+      url: apis["signup"],
       withcredentials: true,
       
       data : JSON.stringify(values)
