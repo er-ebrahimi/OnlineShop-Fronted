@@ -56,7 +56,6 @@ class Stores extends Component {
     axios
       .request(config)
       .then((response) => {
-        console.log(response);
         this.onProductsChanged(response.data);
       })
       .catch((error) => {

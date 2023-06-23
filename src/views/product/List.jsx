@@ -3,6 +3,7 @@ import { data } from "../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTh, faBars } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {searchFunction} from "../../functions/SearchFunction.jsx";
 import { apis } from "../../components/API/api";
 const Paging = lazy(() => import("../../components/Paging"));
 const Breadcrumb = lazy(() => import("../../components/Breadcrumb"));
@@ -62,7 +63,6 @@ class ProductListView extends Component {
       headers: {
         Authorization: "Bearer " + token,
       },
-      data: data,
     };
 
     axios
@@ -104,6 +104,7 @@ class ProductListView extends Component {
   render() {
     return (
       <React.Fragment>
+      {/* {console.log(this.props.products)} */}
         <div
           className="p-5 bg-primary bs-cover"
           style={{
@@ -179,7 +180,7 @@ class ProductListView extends Component {
               <hr />
               <div className="row g-3">
                 {this.state.view === "grid" &&
-                  this.state.currentProducts.map((product, idx) => {
+                  this.props.products.map((product, idx) => {
                     return (
                       <div key={idx} className="col-md-4">
                         <CardProductGrid data={product} />
@@ -187,7 +188,7 @@ class ProductListView extends Component {
                     );
                   })}
                 {this.state.view === "list" &&
-                  this.state.currentProducts.map((product, idx) => {
+                  this.props.products.map((product, idx) => {
                     return (
                       <div key={idx} className="col-md-12">
                         <CardProductList data={product} />
@@ -212,4 +213,4 @@ class ProductListView extends Component {
   }
 }
 
-export default ProductListView;
+export default searchFunction(ProductListView);

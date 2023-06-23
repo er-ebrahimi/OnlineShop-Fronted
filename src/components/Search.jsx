@@ -1,7 +1,9 @@
 import React from "react";
 import { ReactComponent as IconSearch } from "bootstrap-icons/icons/search.svg";
-
+import { useNavigate } from "react-router-dom";
 const Search = () => {
+  const Navigate = useNavigate();
+  
   return (
     <form action="#" className="search">
       <div className="input-group">
@@ -18,6 +20,7 @@ const Search = () => {
           className="btn btn-primary text-white"
           type="submit"
           aria-label="Search"
+          onClick={(e) => {Navigate("/category");}}
         >
           <IconSearch />
         </button>

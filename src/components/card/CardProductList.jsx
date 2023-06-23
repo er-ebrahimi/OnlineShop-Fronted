@@ -7,6 +7,7 @@ import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { apis } from "../API/api";
 const CardProductList = (props) => {
   const product = props.data;
+  console.log("product", product)
   return (
     <div className="card">
       <div className="row g-0">
