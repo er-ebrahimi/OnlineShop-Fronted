@@ -17,11 +17,11 @@ const FilterColor = lazy(() => import("../../components/filter/Color"));
 const FilterTag = lazy(() => import("../../components/filter/Tag"));
 const FilterClear = lazy(() => import("../../components/filter/Clear"));
 const CardServices = lazy(() => import("../../components/card/CardServices"));
-const CardProductGrid = lazy(() =>
-  import("../../components/card/CardProductGrid")
+const CardMyProductGrid = lazy(() =>
+  import("../../components/card/CardMyProductGrid")
 );
-const CardProductList = lazy(() =>
-  import("../../components/card/CardProductList")
+const CardMyProductList = lazy(() =>
+  import("../../components/card/CardMyProductList")
 );
 // const SingUpForm = lazy(() => import("../../components/account/SignUpForm"));
 const AddProduct = lazy(() => import("../cart/AddProduct"));
@@ -86,6 +86,13 @@ class MyProducts extends Component {
       currentProducts: [...this.state.currentProducts,currentProducts]
        });
     console.log("currentProducts2", currentProducts);
+  };
+
+  onProductsDeleted = (id) => {
+    const currentProducts = this.state.currentProducts.filter(
+      (product) => product.id !== id
+    );
+    this.setState({ currentProducts });
   };
 
   onPageChanged = async (page) =>  {
@@ -170,7 +177,6 @@ class MyProducts extends Component {
   render() {
     return (
       <React.Fragment>
-        {console.log("param" , this.props.param)}
         <div
           className="p-5 bg-primary bs-cover"
           style={{
@@ -248,7 +254,9 @@ class MyProducts extends Component {
                   this.state.currentProducts.map((product, idx) => {
                     return (
                       <div key={idx} className="col-md-4">
-                        <CardProductGrid data={product} />
+                        <CardMyProductGrid
+                        onProductsDeleted={this.onProductsDeleted}
+                        data={product} />
                       </div>
                     );
                   })}
@@ -256,7 +264,9 @@ class MyProducts extends Component {
                   this.state.currentProducts.map((product, idx) => {
                     return (
                       <div key={idx} className="col-md-12">
-                        <CardProductList data={product} />
+                        <CardMyProductList 
+                        onProductsDeleted={this.onProductsDeleted}
+                        data={product} />
                       </div>
                     );
                   })}

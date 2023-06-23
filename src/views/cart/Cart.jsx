@@ -7,6 +7,8 @@ import { ReactComponent as IconChevronLeft } from "bootstrap-icons/icons/chevron
 import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { apis } from "../../components/API/api";
 const CouponApplyForm = lazy(() =>
   import("../../components/others/CouponApplyForm")
 );
@@ -19,6 +21,44 @@ class CartView extends Component {
   onSubmitApplyCouponCode = async (values) => {
     alert(JSON.stringify(values));
   };
+
+  state = {
+    currentProducts: [],
+  };
+
+  onProductsChanged = (products) => {
+    this.setState({
+      currentProducts: products,
+    });
+  };
+
+  componentDidMount() {
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: apis["basket"]["list"],
+      headers: {
+        Authorization: "Bearer " + token,
+        
+      },
+    };
+    
+    axios
+    .request(config)
+    .then((response) => {
+      console.log(response.data);
+      this.setState({ currentProducts: response.data })
+      console.log("currentProducts", this.state.currentProducts);
+      
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   render() {
     return (
       <React.Fragment>
@@ -67,6 +107,12 @@ class CartView extends Component {
                             </div>
                           </div>
                         </td>
+                          {
+                            /* map */
+                            // this.state.currentProducts.map((product) => (
+                            //   <></>
+                            // ))
+                          }
                         <td>
                           <div className="input-group input-group-sm mw-140">
                             <button
@@ -102,8 +148,8 @@ class CartView extends Component {
                             <IconTrash className="i-va" />
                           </button>
                         </td>
-                                        </tr>
-                                        <tr>
+                      </tr>
+                      {/* <tr>
                         <td>
                           <div className="row">
                             <div className="col-3 d-none d-md-block">
@@ -161,7 +207,7 @@ class CartView extends Component {
                             <IconTrash className="i-va" />
                           </button>
                         </td>
-                      </tr>
+                      </tr> */}
                     </tbody>
                   </table>
                 </div>
@@ -221,7 +267,7 @@ class CartView extends Component {
           </div>
         </div>
         <div className="bg-light border-top p-4">
-          <div className="container">
+          {/* <div className="container">
             <h6>Payment and refund policy</h6>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -241,7 +287,7 @@ class CartView extends Component {
               nulla pariatur. Excepteur sint occaecat cupidatat non proident,
               sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
-          </div>
+          </div> */}
         </div>
       </React.Fragment>
     );

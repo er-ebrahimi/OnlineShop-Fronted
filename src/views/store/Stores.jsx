@@ -31,8 +31,6 @@ class Stores extends Component {
     imageURLs: "",
   };
   onSubmit = async (values) => {
-    console.log("image", this.state.image);
-    console.log("image type", typeof this.state.image);
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("bio", values.Info);
@@ -78,12 +76,10 @@ class Stores extends Component {
   };
 
   onProductsDeleted = (id) => {
-    console.log("currentProducts", this.state.currentProducts);
     const currentProducts = this.state.currentProducts.filter(
       (product) => product.id !== id
     );
     this.setState({ currentProducts });
-    console.log("currentProducts", this.state.currentProducts);
   };
 
   onPageChanged = async (page) => {
@@ -101,7 +97,7 @@ class Stores extends Component {
       headers: {
         Authorization: "Bearer " + token,
       },
-      data: data,
+      // data: data,
     };
 
     axios
@@ -131,29 +127,6 @@ class Stores extends Component {
 
   getProducts = () => {
     let products = data.products;
-    const tokenJson = localStorage.getItem("authTokens");
-    const tokenClass = JSON.parse(tokenJson);
-    const token = tokenClass.access;
-    // console.log("token", token);
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: apis["store"]["list"],
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        // console.log(JSON.stringify(response.data));
-        products = JSON.stringify(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     products = products.concat(products);
     products = products.concat(products);
     products = products.concat(products);

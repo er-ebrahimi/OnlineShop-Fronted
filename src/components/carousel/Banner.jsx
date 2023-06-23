@@ -36,7 +36,7 @@ const Banner = (props) => {
           <Indicator item={props.id} index={index} key={index} />
         ))}
       </ol>
-      <div className="carousel-inner">
+      <div className="carousel-inner" >
         {props.data.map((item, index) => (
           <Item item={item} index={index} key={index} />
         ))}

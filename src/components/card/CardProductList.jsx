@@ -60,11 +60,11 @@ const CardProductList = (props) => {
                 ${product.originPrice}
               </del>
             )}
-            {(product.discountPercentage > 0 || product.discountPrice > 0) && (
+            {(product.bio > 0 || product.discountPrice > 0) && (
               <span className={`rounded p-1 bg-warning ms-2 small`}>
                 -
-                {product.discountPercentage > 0
-                  ? product.discountPercentage + "%"
+                {product.bio > 0
+                  ? product.bio + "%"
                   : "$" + product.discountPrice}
               </span>
             )}

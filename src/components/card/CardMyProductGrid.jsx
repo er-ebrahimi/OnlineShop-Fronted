@@ -2,9 +2,38 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as IconStarFill } from "bootstrap-icons/icons/star-fill.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { apis } from "../API/api";
+const CardMyProductGrid = (props) => {
+    const onProductsDeleted = props.onProductsDeleted;
 
-const CardProductGrid = (props) => {
+    const deleteProduct = async (values) => {
+        const tokenJson = localStorage.getItem("authTokens");
+        const tokenClass = JSON.parse(tokenJson);
+        const token = tokenClass.access;
+        // console.log("token", token);
+    
+        let config = {
+          method: "delete", // changed from get to post
+          maxContentLength: Infinity, // changed from maxBodyLength to maxContentLength
+          url: apis["product"]["delete"]+values.id+"/",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "multipart/form-data", // added content type header
+          },
+        };
+    
+        axios
+          .request(config)
+          .then((response) => {
+            onProductsDeleted(product.id);
+    
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };  
   const product = props.data;
   return (
     <div className="card">
@@ -58,10 +87,11 @@ const CardProductGrid = (props) => {
           </button>
           <button
             type="button"
-            className="btn btn-sm btn-outline-secondary"
+            className="btn btn-sm btn-danger"
             title="Add to wishlist"
+            onClick={()=>(deleteProduct(product))}
           >
-            <FontAwesomeIcon icon={faHeart} />
+            <FontAwesomeIcon icon={faTrash} />
           </button>
         </div>
       </div>
@@ -69,4 +99,4 @@ const CardProductGrid = (props) => {
   );
 };
 
-export default CardProductGrid;
+export default CardMyProductGrid;

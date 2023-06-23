@@ -48,7 +48,7 @@ class HomeView extends Component {
           {row.map((product, idx) => {
             const ProductImage = this.components[product.img];
             return (
-              <div key={idx} className="col-md-3 mb-4" >
+              <div key={idx} className="col-md-3 mb-4 h-4" style={{height:"20rem"}}>
                 <CardIcon
                   title={product.title}
                   text={product.text}
