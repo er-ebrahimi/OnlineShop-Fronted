@@ -121,14 +121,14 @@ class ProductListView extends Component {
         <div className="container-fluid mb-3">
           <div className="row">
             <div className="col-md-3">
-              <FilterCategory />
+              {/* <FilterCategory />
               <FilterPrice />
               <FilterSize />
               <FilterStar />
               <FilterColor />
               <FilterClear />
               <FilterTag />
-              <CardServices />
+              <CardServices /> */}
             </div>
             <div className="col-md-9">
               <div className="row">

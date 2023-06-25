@@ -20,16 +20,20 @@ const FilterPrice = (props) => {
   useEffect(() => {
     // choosePrice()
     // console.log("price", price);
+    const queryParams = new URLSearchParams(location.search);
+    let temp = queryParams.get("type");
+    if (price[1] === 0) {
+      navigate(`/product/category?type=${temp}`);
+      return;
+    }
+    props.setSearchQuery(temp);
     navigate(
       `/product/category?type=other&lower_price=${price[0]}&upper_price=${price[1]}`
     );
-    const queryParams = new URLSearchParams(location.search);
-    props.setSearchQuery(queryParams.get("type"));
     // console.log("searchQuery", props.setSearchQuery);
-    props.setChanger(!props.change)
-    console.log(props.change)
-    console.log("search query changed")
-
+    props.setChanger(!props.change);
+    console.log(props.change);
+    console.log("search query changed");
   }, [price]);
   const choosePrice = () => {
     if (!checked1 && !checked2 && !checked3) {
