@@ -9,9 +9,13 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { data } from "../../data";
+import { withHooksHOC } from "../../functions/MyProductsFunc";
+import axios from "axios";
+import { apis } from "../../components/API/api";
 const CardFeaturedProduct = lazy(() =>
   import("../../components/card/CardFeaturedProduct")
 );
+
 const CardServices = lazy(() => import("../../components/card/CardServices"));
 const Details = lazy(() => import("../../components/others/Details"));
 const RatingsReviews = lazy(() =>
@@ -27,9 +31,58 @@ const SizeChart = lazy(() => import("../../components/others/SizeChart"));
 class ProductDetailView extends Component {
   constructor(props) {
     super();
-    this.state = {};
+    this.state = {
+      product:{},
+      isLoading: true,
+      error: null,
+    };
+  }
+  componentDidMount() {
+    const { param } = this.props;
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: apis["product"]["show"] + param.id + "/",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      // data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log("response", response.data);
+        this.setState({
+          product: response.data,
+          isLoading: false,
+        });
+        console.log("product", this.state.product)
+      })
+      .catch((error) => {
+        this.setState({
+          isLoading: false,
+          error: error.message,
+        });
+      });
   }
   render() {
+    const { product, isLoading, error } = this.state;
+
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
+
+    
+    console.log("ProductDetailView", product)
     return (
       <div className="container-fluid mt-3">
         <div className="row">
@@ -37,11 +90,11 @@ class ProductDetailView extends Component {
             <div className="row mb-3">
               <div className="col-md-5 text-center">
                 <img
-                  src="../../images/products/tshirt_red_480x400.webp"
+                  src={this.state.product.image}
                   className="img-fluid mb-3"
                   alt=""
                 />
-                <img
+                {/* <img
                   src="../../images/products/tshirt_grey_480x400.webp"
                   className="border border-secondary me-2" width="75"
                   alt="..."
@@ -55,11 +108,11 @@ class ProductDetailView extends Component {
                   src="../../images/products/tshirt_green_480x400.webp"
                   className="border border-secondary me-2" width="75"
                   alt="..."
-                />
+                /> */}
               </div>
               <div className="col-md-7">
                 <h1 className="h5 d-inline me-2">
-                  Great product name goes here
+                  {product.name}
                 </h1>
                 <span className="badge bg-success me-2">New</span>
                 <span className="badge bg-danger me-2">Hot</span>
@@ -77,9 +130,9 @@ class ProductDetailView extends Component {
                   <dt className="col-sm-3">Availability</dt>
                   <dd className="col-sm-9">In stock</dd>
                   <dt className="col-sm-3">Sold by</dt>
-                  <dd className="col-sm-9">Authorised Store</dd>
-                  <dt className="col-sm-3">Size</dt>
-                  <dd className="col-sm-9">
+                  <dd className="col-sm-9">{product.store.name}</dd>
+                  {/* <dt className="col-sm-3">Size</dt> */}
+                  {/* <dd className="col-sm-9">
                     <div className="form-check form-check-inline">
                       <input
                         className="form-check-input"
@@ -137,8 +190,8 @@ class ProductDetailView extends Component {
                         XXL
                       </label>
                     </div>
-                  </dd>
-                  <dt className="col-sm-3">Color</dt>
+                  </dd> */}
+                  {/* <dt className="col-sm-3">Color</dt>
                   <dd className="col-sm-9">
                     <button className="btn btn-sm btn-primary p-2 me-2"></button>
                     <button className="btn btn-sm btn-secondary p-2 me-2"></button>
@@ -147,15 +200,15 @@ class ProductDetailView extends Component {
                     <button className="btn btn-sm btn-warning p-2 me-2"></button>
                     <button className="btn btn-sm btn-info p-2 me-2"></button>
                     <button className="btn btn-sm btn-dark p-2 me-2"></button>
-                  </dd>
+                  </dd> */}
                 </dl>
 
                 <div className="mb-3">
-                  <span className="fw-bold h5 me-2">$1900</span>
-                  <del className="small text-muted me-2">$2000</del>
-                  <span className="rounded p-1 bg-warning  me-2 small">
+                  <span className="fw-bold h5 me-2">${product.price}</span>
+                  {/* <del className="small text-muted me-2">$2000</del> */}
+                  {/* <span className="rounded p-1 bg-warning  me-2 small">
                     -$100
-                  </span>
+                  </span> */}
                 </div>
                 <div className="mb-3">
                   <div className="d-inline float-start me-2">
@@ -186,13 +239,13 @@ class ProductDetailView extends Component {
                   >
                     <FontAwesomeIcon icon={faCartPlus} /> Add to cart
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-sm btn-warning me-2"
                     title="Buy now"
                   >
                     <FontAwesomeIcon icon={faShoppingCart} /> Buy now
-                  </button>
+                  </button> */}
                   <button
                     type="button"
                     className="btn btn-sm btn-outline-secondary"
@@ -203,15 +256,15 @@ class ProductDetailView extends Component {
                 </div>
                 <div>
                   <p className="fw-bold mb-2 small">
-                    Product Highlights
+                    {product.bio}
                   </p>
-                  <ul className="small">
+                  {/* <ul className="small">
                     <li>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </li>
                     <li>Etiam ullamcorper nibh eget faucibus dictum.</li>
                     <li>Cras consequat felis ut vulputate porttitor.</li>
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
             </div>
@@ -337,4 +390,4 @@ class ProductDetailView extends Component {
   }
 }
 
-export default ProductDetailView;
+export default withHooksHOC(ProductDetailView);

@@ -20,7 +20,7 @@ const Search = () => {
           className="btn btn-primary text-white"
           type="submit"
           aria-label="Search"
-          onClick={(e) => {Navigate("/category");}}
+          onClick={(e) => {Navigate("/search");}}
         >
           <IconSearch />
         </button>

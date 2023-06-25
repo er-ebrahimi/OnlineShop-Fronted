@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { apis } from "./API/api";
 
 const TopMenu = () => {
   return (
@@ -80,12 +81,12 @@ const TopMenu = () => {
               </ul>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/category?search=#">
-                Fashion
+              <Link className="nav-link" to={"/product/categories/?type=laptop"}>
+                Laptop
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/category?search=#">
+              <Link className="nav-link" to={apis["product"]["categories"] + ""}>
                 Supermarket
               </Link>
             </li>

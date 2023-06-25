@@ -9,15 +9,17 @@ export const apis = {
         "search" : `${domain}/store/search/?search=`,
     },
     "product" : {
-        "product" : `${domain}/product/`,
+        "show" : `${domain}/product/show/`,
         "create" : `${domain}/product/create/`,
         "list" : `${domain}/product/list/`,
         "delete" : `${domain}/product/delete/`,
         "search" : `${domain}/product/search/?search=`,
+        "categories": `${domain}/product/categories/`,
     },
     "basket" : {
         "create" : `${domain}/basket/create/`,
         "list" : `${domain}/basket/list/`,
         "delete" : `${domain}/basket/delete/`,
     },
+    
 }

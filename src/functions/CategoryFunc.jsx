@@ -2,17 +2,25 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { apis } from "../components/API/api";
-export const searchFunction = (Component) => {
+import React from "react";
+export const categoryFunc = (Component) => {
   return (props) => {
     const location = useLocation();
-    console.log("location", location);
+    // console.log("location", location);
     const queryParams = new URLSearchParams(location.search);
-    const searchQuery = queryParams.get("search");
+    const [searchQuery, setSearchQuery1] = React.useState( queryParams.get("type"));
+    const [change, setChanger] = React.useState(false)
+    // console.log("searchQuery", searchQuery);
     const [products, setProducts] = useState([]);
-
     useEffect(() => {
+      console.log("fetch data");
       fetchData(searchQuery);
-    }, [searchQuery]);
+    }, [searchQuery,change]);
+    function setSearchQuery(props){
+      setSearchQuery1(props);
+      console.log("searchQuery in func", searchQuery);
+    }
+
 
     // useEffect(() => {
     //   console.log("location", location);
@@ -21,12 +29,12 @@ export const searchFunction = (Component) => {
       const tokenJson = localStorage.getItem("authTokens");
       const tokenClass = JSON.parse(tokenJson);
       const token = tokenClass.access;
-      // console.log("token", token);
+      // console.log("request sent");
 
       let config = {
         method: "get", // changed from get to post
         maxContentLength: Infinity, // changed from maxBodyLength to maxContentLength
-        url: apis["product"]["search"]+query,
+        url: apis["product"]["categories"]+location.search,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "multipart/form-data", // added content type header
@@ -37,7 +45,6 @@ export const searchFunction = (Component) => {
       axios
       .request(config)
       .then((response) => {
-        console.log("search result",response.data);
         setProducts(response.data);
       })
       .catch((error) => {
@@ -45,6 +52,6 @@ export const searchFunction = (Component) => {
       });
     };
       
-    return <Component products = {products} {...props} />;
+    return <Component products = {products} setSearchQuery={setSearchQuery} setChanger={setChanger} change = {change} {...props} />;
   };
 };
