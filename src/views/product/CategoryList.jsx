@@ -40,11 +40,11 @@ class ProductListView extends Component {
   }
 
   onProductsChanged = (currentProducts) => {
-    // console.log("currentProducts1", currentProducts);
+    // //console.log("currentProducts1", currentProducts);
     this.setState({
       currentProducts: [...this.state.currentProducts,currentProducts]
        });
-    // console.log("currentProducts2", currentProducts);
+    // //console.log("currentProducts2", currentProducts);
   };
 
   onPageChanged = async (page) =>  {
@@ -61,15 +61,15 @@ class ProductListView extends Component {
       .request(config)
       .then((response) => {
         products = response.data;
-        // console.log("stores",response.data);
+        // //console.log("stores",response.data);
         const { currentPage, totalPages, pageLimit } = page;
         const offset = (currentPage - 1) * pageLimit;
         const currentProducts = products.slice(offset, offset + pageLimit);
-        // console.log("currentProducts", currentProducts);
+        // //console.log("currentProducts", currentProducts);
         this.setState({ currentPage, currentProducts, totalPages });
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -79,12 +79,12 @@ class ProductListView extends Component {
 
   onChangeImage = (image) => {
     this.setState({ image });
-    console.log("change image", image);
+    //console.log("change image", image);
   };
   
   getProducts = () => {
     let products = data.products;
-    // console.log("token", token);
+    // //console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -99,17 +99,17 @@ class ProductListView extends Component {
       .request(config)
       .then((response) => {
         products = response.data;
-        // console.log("stores",response.data);
+        // //console.log("stores",response.data);
         // const { currentPage, totalPages, pageLimit } = page;
         // const offset = (currentPage - 1) * pageLimit;
         // const currentProducts = products.slice(offset, offset + pageLimit);
-        // console.log("currentProducts", currentProducts);
+        // //console.log("currentProducts", currentProducts);
         // this.setState({ currentPage, currentProducts, totalPages });
-        console.log(products)
+        //console.log(products)
         products = products.data;
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
     // products = products.concat(products);
     // products = products.concat(products);
@@ -122,7 +122,7 @@ class ProductListView extends Component {
   render() {
     return (
       <React.Fragment>
-      {/* {console.log(this.props.products)} */}
+      {/* {//console.log(this.props.products)} */}
         <div
           className="p-5 bg-primary bs-cover"
           style={{

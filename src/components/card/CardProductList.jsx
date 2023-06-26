@@ -9,7 +9,7 @@ import { Add } from "../../functions/addToBasket";
 import {likeProduct} from "../../functions/likeProduct";
 const CardProductList = (props) => {
   const product = props.data;
-  // console.log("product", product)
+  // //console.log("product", product)
   return (
     <div className="card">
       <div className="row g-0">

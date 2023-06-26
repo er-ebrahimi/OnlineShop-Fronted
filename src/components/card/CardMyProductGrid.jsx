@@ -14,7 +14,7 @@ const CardMyProductGrid = (props) => {
         const tokenJson = localStorage.getItem("authTokens");
         const tokenClass = JSON.parse(tokenJson);
         const token = tokenClass.access;
-        // console.log("token", token);
+        // //console.log("token", token);
     
         let config = {
           method: "delete", // changed from get to post
@@ -33,13 +33,13 @@ const CardMyProductGrid = (props) => {
     
           })
           .catch((error) => {
-            console.log(error);
+            //console.log(error);
           });
       };  
   const product = props.data;
   return (
     <div className="card">
-      {/* {console.log("product", product)} */}
+      {/* {//console.log("product", product)} */}
       <img src={domain + product.image} className="card-img-top" alt="..." />
       {product.isNew && (
         <span className="badge bg-success position-absolute mt-2 ms-2">

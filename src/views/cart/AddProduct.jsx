@@ -24,28 +24,28 @@ import renderFormField from "../../helpers/renderFormField";
 
 const AddProduct = (props) => {
   const { handleSubmit, submitting, onSubmit, submitFailed, onChangeImage } = props;
-  // console.log("props",props)
+  // //console.log("props",props)
   const [imageURLs, setlmageURLs] = React.useState("");
   const [images, setImages] = React.useState("");
   function onImageChangeForm(event) {
     if (event.target.files && event.target.files[0]) {
-      console.log("event.target.files", event.target.files);
+      // //console.log("event.target.files", event.target.files);
       setImages(event.target.files[0]);
-      console.log("hello image", images)
+      // //console.log("hello image", images)
       onChangeImage(event.target.files[0]);
     }
-    console.log("image", images)
+    // //console.log("image", images)
   }
   React.useEffect(() => {
     // if (images.length < 1) return;
     // const newlmageUrls = [];
     // images.forEach ( image => newlmageUrls.push ( URL.createObjectURL( image) ) ) ;
     setlmageURLs(images) ;
-    // console.log("imageURLs", images)
+    // //console.log("imageURLs", images)
   },[images]);
   const renderImageField = ({ input, meta, ...props }) => {
     const onChange = (event) => {
-      console.log(event.target.files[0])
+      // //console.log(event.target.files[0])
       onImageChangeForm(event);
     };
     const { touched, error } = meta;
@@ -132,7 +132,7 @@ const AddProduct = (props) => {
           type="submit"
           className="btn btn-primary mb-3"
           disabled={submitting}
-          // onClick={console.log("hello")}
+          // onClick={//console.log("hello")}
         >
           Create
         </button>

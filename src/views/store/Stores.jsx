@@ -36,11 +36,11 @@ class Stores extends Component {
     formData.append("bio", values.Info);
     formData.append("address", values.address);
     formData.append("image", this.state.image);
-    console.log("formData", formData.image);
+    //console.log("formData", formData.image);
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
-    // console.log("token", token);
+    // //console.log("token", token);
 
     let config = {
       method: "post", // changed from get to post
@@ -59,7 +59,7 @@ class Stores extends Component {
         this.onProductsChanged(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -83,12 +83,12 @@ class Stores extends Component {
 
   onPageChanged = async (page) => {
     let products = this.getProducts();
-    // console.log("products", products)
-    // console.log("page", page)
+    // //console.log("products", products)
+    // //console.log("page", page)
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
-    // console.log("token", token);
+    // //console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -103,15 +103,15 @@ class Stores extends Component {
       .request(config)
       .then((response) => {
         products = response.data;
-        // console.log("stores",response.data);
+        // //console.log("stores",response.data);
         const { currentPage, totalPages, pageLimit } = page;
         const offset = (currentPage - 1) * pageLimit;
         const currentProducts = products.slice(offset, offset + pageLimit);
-        // console.log("currentProducts", currentProducts);
+        // //console.log("currentProducts", currentProducts);
         this.setState({ currentPage, currentProducts, totalPages });
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -121,7 +121,7 @@ class Stores extends Component {
 
   onChangeImage = (image) => {
     this.setState({ image });
-    console.log("change image", image);
+    //console.log("change image", image);
   };
 
   getProducts = () => {
@@ -129,7 +129,7 @@ class Stores extends Component {
     // let products = data.products;
 
     const token = JSON.parse(localStorage.getItem("authTokens")).access;
-    // console.log("token", token);
+    // //console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -147,7 +147,7 @@ class Stores extends Component {
         products = products.data;
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
     return products;
   };

@@ -41,8 +41,8 @@ class MyProducts extends Component {
     this.setState({selectedType : event.target.value});
   };
   onSubmit = async (values) => {
-    // console.log("image", this.state.image);
-    // console.log("image type", typeof this.state.image);
+    // //console.log("image", this.state.image);
+    // //console.log("image type", typeof this.state.image);
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("bio", values.bio);
@@ -51,12 +51,12 @@ class MyProducts extends Component {
     formData.append("amount", values.amount);
     formData.append("image", this.state.image);
     formData.append("type" , this.state.selectedType)
-    console.log("formData", formData);
-    console.log("state", this.state);
+    //console.log("formData", formData);
+    //console.log("state", this.state);
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
-    // console.log("token", token);
+    // //console.log("token", token);
 
     let config = {
       method: "post", // changed from get to post
@@ -72,12 +72,12 @@ class MyProducts extends Component {
     axios
       .request(config)
       .then((response) => {
-        console.log(response);
-        this.onProductsChanged(response.data);
-
+        //console.log(response);
+        this.onProductsChanged({...response.data, image:response.data.image.match(/\/media\/product_images\/.*$/)[0]});
+        //console.log("convert" , response.data.image.match(/\/media\/product_images\/.*$/)[0])
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -87,11 +87,11 @@ class MyProducts extends Component {
   }
 
   onProductsChanged = (currentProducts) => {
-    console.log("currentProducts1", currentProducts);
+    //console.log("currentProducts1", currentProducts);
     this.setState({
       currentProducts: [...this.state.currentProducts,currentProducts]
        });
-    console.log("currentProducts2", currentProducts);
+    //console.log("currentProducts2", currentProducts);
   };
 
   onProductsDeleted = (id) => {
@@ -103,12 +103,12 @@ class MyProducts extends Component {
 
   onPageChanged = async (page) =>  {
     let products = this.getProducts();
-    // console.log("products", products)
-    // console.log("page", page)
+    // //console.log("products", products)
+    // //console.log("page", page)
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
-    // console.log("token", token);
+    // //console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -124,15 +124,15 @@ class MyProducts extends Component {
       .request(config)
       .then((response) => {
         products = response.data;
-        console.log("stores",response.data);
+        //console.log("stores",response.data);
         const { currentPage, totalPages, pageLimit } = page;
         const offset = (currentPage - 1) * pageLimit;
         const currentProducts = products.slice(offset, offset + pageLimit);
-        // console.log("currentProducts", currentProducts);
+        // //console.log("currentProducts", currentProducts);
         this.setState({ currentPage, currentProducts, totalPages });
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -142,7 +142,7 @@ class MyProducts extends Component {
 
   onChangeImage = (image) => {
     this.setState({ image });
-    console.log("change image", image);
+    //console.log("change image", image);
   };
   
   getProducts = () => {
@@ -163,7 +163,7 @@ class MyProducts extends Component {
         products = products.data;
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
     return products;
   };

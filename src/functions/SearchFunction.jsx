@@ -5,7 +5,7 @@ import { apis } from "../components/API/api";
 export const searchFunction = (Component) => {
   return (props) => {
     const location = useLocation();
-    console.log("location", location);
+    //console.log("location", location);
     const queryParams = new URLSearchParams(location.search);
     const searchQuery = queryParams.get("search");
     const [products, setProducts] = useState([]);
@@ -15,13 +15,13 @@ export const searchFunction = (Component) => {
     }, [searchQuery]);
 
     // useEffect(() => {
-    //   console.log("location", location);
+    //   //console.log("location", location);
 
     const fetchData = async (query) => {
       // const tokenJson = localStorage.getItem("authTokens");
       // const tokenClass = JSON.parse(tokenJson);
       // const token = tokenClass.access;
-      // console.log("token", token);
+      // //console.log("token", token);
 
       let config = {
         method: "get", // changed from get to post
@@ -37,11 +37,11 @@ export const searchFunction = (Component) => {
       axios
       .request(config)
       .then((response) => {
-        console.log("search result",response.data);
+        // //console.log("search result",response.data);
         setProducts(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
     };
       

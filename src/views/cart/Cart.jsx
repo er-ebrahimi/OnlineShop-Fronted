@@ -23,7 +23,7 @@ class CartView extends Component {
     };
   }
   quantity = (id, upDown) => {
-    console.log("id", id)
+    // //console.log("id", id)
     let temp = this.state.currentProducts.map((product) => {
       if (product.id === id) {
         if(upDown){
@@ -39,7 +39,7 @@ class CartView extends Component {
       else
       return product;
     });
-    console.log(temp)
+    // //console.log(temp)
     this.setState({ currentProducts: temp });
   }
   onSubmitApplyCouponCode = async (values) => {
@@ -64,14 +64,14 @@ class CartView extends Component {
         quantity: qunit,
       },
     };
-    console.log("config", config);
+    // //console.log("config", config);
     axios
       .request(config)
       .then((response) => {
-        console.log("id", response);
+        // //console.log("id", response);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -96,12 +96,12 @@ class CartView extends Component {
     axios
     .request(config)
     .then((response) => {
-      console.log(response.data);
+      // //console.log(response.data);
       this.setState({ currentProducts: response.data.products , total: response.data.total_price})
-      console.log("resoponse", this.state);
+      // //console.log("resoponse", this.state);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   }
   render() {
@@ -282,7 +282,7 @@ class CartView extends Component {
                   <dl className="row border-bottom">
                     <dt className="col-6">Total price:</dt>
                     <dd className="col-6 text-end">{this.state.total}$</dd>
-                      {console.log("this state product",this.state.total)}
+
                     <dt className="col-6 text-success">Discount:</dt>
                     <dd className="col-6 text-success text-end">0</dd>
                     <dt className="col-6 text-success">

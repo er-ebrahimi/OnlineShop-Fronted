@@ -79,7 +79,7 @@ const TopMenu = () => {
                 to={"/product/categories/?type=laptop"}
                 onClick={() => {
                   changeInfo("change", !info.change);
-                  // console.log(info.change)
+                  // //console.log(info.change)
                 }}
               >
                 Laptop
@@ -91,7 +91,7 @@ const TopMenu = () => {
                 to={"/product/categories/?type=cloth"}
                 onClick={() => {
                   changeInfo("change", !info.change);
-                  // console.log(info.change)
+                  // //console.log(info.change)
                 }}
               >
                 Clothes
@@ -103,7 +103,7 @@ const TopMenu = () => {
                 to="/product/categories/?type=mobile"
                 onClick={() => {
                   changeInfo("change", !info.change);
-                  // console.log(info.change)
+                  // //console.log(info.change)
                 }}
               >
                 Mobile
@@ -115,7 +115,7 @@ const TopMenu = () => {
                 to="/product/categories/?type=electronic"
                 onClick={() => {
                   changeInfo("change", !info.change);
-                  // console.log(info.change)
+                  // //console.log(info.change)
                 }}
               >
                 Electronic
@@ -127,7 +127,7 @@ const TopMenu = () => {
                 to="/product/categories/?type=furniture"
                 onClick={() => {
                   changeInfo("change", !info.change);
-                  // console.log(info.change)
+                  // //console.log(info.change)
                 }}
               >
                 Furniture
@@ -139,7 +139,7 @@ const TopMenu = () => {
                 to="/product/categories/?type=other"
                 onClick={() => {
                   changeInfo("change", !info.change);
-                  // console.log(info.change)
+                  // //console.log(info.change)
                 }}
               >
                 Other

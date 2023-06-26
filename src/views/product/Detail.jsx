@@ -40,7 +40,7 @@ class ProductDetailView extends Component {
     };
   }
   quantity = ( upDown) => {
-    console.log("hello")
+    //console.log("hello")
     if (upDown) {
       this.setState({quantity: this.state.quantity + 1})
     }else{
@@ -53,7 +53,7 @@ class ProductDetailView extends Component {
     // const tokenJson = localStorage.getItem("authTokens");
     // const tokenClass = JSON.parse(tokenJson);
     // const token = tokenClass.access;
-    // console.log("token", token);
+    // //console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -67,12 +67,12 @@ class ProductDetailView extends Component {
     axios
       .request(config)
       .then((response) => {
-        // console.log("response", response.data);
+        // //console.log("response", response.data);
         this.setState({
           product: response.data,
           isLoading: false,
         });
-        console.log("product", this.state.product)
+        //console.log("product", this.state.product)
       })
       .catch((error) => {
         this.setState({
@@ -93,7 +93,7 @@ class ProductDetailView extends Component {
     }
 
     
-    console.log("ProductDetailView", product)
+    //console.log("ProductDetailView", product)
     return (
       <div className="container-fluid mt-3">
         <div className="row">
@@ -253,7 +253,7 @@ class ProductDetailView extends Component {
                     title="Add to cart"
                     onClick={() => {Add(product.id , this.state.quantity)}}
                   >
-                    {/* {console.log(product.id)} */}
+                    {/* {//console.log(product.id)} */}
                     <FontAwesomeIcon icon={faCartPlus} /> Add to cart
                   </button>
                   {/* <button

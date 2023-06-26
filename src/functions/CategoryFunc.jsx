@@ -7,31 +7,31 @@ import { useInfo } from "../context/Infocontext";
 export const categoryFunc = (Component) => {
   return (props) => {
     const location = useLocation();
-    // console.log("location", location);
+    // //console.log("location", location);
     const queryParams = new URLSearchParams(location.search);
     const [searchQuery, setSearchQuery1] = React.useState( queryParams.get("type"));
     const [change, setChanger] = React.useState(false)
-    // console.log("searchQuery", searchQuery);
+    // //console.log("searchQuery", searchQuery);
     const [products, setProducts] = useState([]);
     const { info, changeInfo } = useInfo();
     useEffect(() => {
-      console.log("fetch data");
+      // //console.log("fetch data");
       fetchData(searchQuery);
     }, [searchQuery,change,info]);
     function setSearchQuery(props){
       setSearchQuery1(props);
-      console.log("searchQuery in func", searchQuery);
+      // //console.log("searchQuery in func", searchQuery);
     }
 
 
     // useEffect(() => {
-    //   console.log("location", location);
+    //   //console.log("location", location);
 
     const fetchData = async (query) => {
       const tokenJson = localStorage.getItem("authTokens");
       const tokenClass = JSON.parse(tokenJson);
       const token = tokenClass.access;
-      // console.log("request sent");
+      // //console.log("request sent");
 
       let config = {
         method: "get", // changed from get to post
@@ -50,7 +50,7 @@ export const categoryFunc = (Component) => {
         setProducts(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
     };
       

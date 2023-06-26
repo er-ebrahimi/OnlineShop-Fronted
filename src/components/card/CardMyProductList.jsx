@@ -18,7 +18,7 @@ const CardMyProductList = (props) => {
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
-    // console.log("token", token);
+    // //console.log("token", token);
 
     let config = {
       method: "delete", // changed from get to post
@@ -33,11 +33,11 @@ const CardMyProductList = (props) => {
     axios
       .request(config)
       .then((response) => {
-        console.log("id", product.id);
+        // //console.log("id", product.id);
         onProductsDeleted(product.id);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
   const product = props.data;

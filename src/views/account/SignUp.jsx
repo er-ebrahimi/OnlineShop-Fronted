@@ -8,7 +8,7 @@ function SignUpView() {
   const Navigate = useNavigate();
   axios.defaults.headers.post['Content-Type'] = 'application/json';
   const onSubmit = async (values) => {
-    console.log("sgin in");
+    //console.log("sgin in");
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
@@ -20,8 +20,8 @@ function SignUpView() {
     
     axios.request(config)
     .then((response) => {
-      console.log(JSON.stringify(response.data));
-      console.log("login");
+      //console.log(JSON.stringify(response.data));
+      //console.log("login");
       Navigate("/account/signin");
       
     })

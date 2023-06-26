@@ -19,7 +19,7 @@ const FilterPrice = (props) => {
   }, [checked1, checked2, checked3]);
   useEffect(() => {
     // choosePrice()
-    // console.log("price", price);
+    // //console.log("price", price);
     const queryParams = new URLSearchParams(location.search);
     let temp = queryParams.get("type");
     if (price[1] === 0) {
@@ -30,10 +30,10 @@ const FilterPrice = (props) => {
     navigate(
       `/product/category?type=other&lower_price=${price[0]}&upper_price=${price[1]}`
     );
-    // console.log("searchQuery", props.setSearchQuery);
+    // //console.log("searchQuery", props.setSearchQuery);
     props.setChanger(!props.change);
-    console.log(props.change);
-    console.log("search query changed");
+    // //console.log(props.change);
+    // //console.log("search query changed");
   }, [price]);
   const choosePrice = () => {
     if (!checked1 && !checked2 && !checked3) {
@@ -45,17 +45,17 @@ const FilterPrice = (props) => {
     if (checked1) {
       min = numbers[0];
       max = numbers[1];
-      // console.log("max1", max)
+      // //console.log("max1", max)
     }
     if (checked2) {
       min = numbers[1] < min ? numbers[1] : min;
       max = numbers[2] > max ? numbers[2] : max;
-      // console.log(2)
+      // //console.log(2)
     }
     if (checked3) {
       min = numbers[2] < min ? numbers[2] : min;
       max = numbers[3] > max ? numbers[3] : max;
-      // console.log(3)
+      // //console.log(3)
     }
 
     setPrice([min, max]);

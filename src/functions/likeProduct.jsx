@@ -6,7 +6,7 @@ export const likeProduct = (id) => {
   const tokenJson = localStorage.getItem("authTokens");
   const tokenClass = JSON.parse(tokenJson);
   const token = tokenClass.access;
-  // console.log("token", token);
+  // //console.log("token", token);
   let config = {
     method: "get",
     maxBodyLength: Infinity,
@@ -16,13 +16,13 @@ export const likeProduct = (id) => {
     },
     
   };
-  console.log("config", config);
+  //console.log("config", config);
   axios
     .request(config)
     .then((response) => {
-      console.log("id", response);
+      // //console.log("id", response);
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
     });
 };

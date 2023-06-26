@@ -41,7 +41,7 @@ class HomeView extends Component {
 
   componentDidMount() {
     // this.getProducts();
-    // console.log("token", token);
+    // //console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -55,7 +55,7 @@ class HomeView extends Component {
     axios
       .request(config)
       .then((response) => {
-        console.log("response", response.data);
+        // //console.log("response", response.data);
         const iconProducts =  response.data;
         const rows = [...Array(Math.ceil(iconProducts.length / 4))];
         // chunk the products into the array of rows
@@ -63,10 +63,10 @@ class HomeView extends Component {
         iconProducts.slice(idx * 4, idx * 4 + 4)
         );
         this.setState({ products:productRows });
-        console.log("prodoct", productRows);
+        // //console.log("prodoct", productRows);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   }
 
@@ -77,7 +77,7 @@ class HomeView extends Component {
     // const productRows = rows.map((row, idx) =>
     //   iconProducts.slice(idx * 4, idx * 4 + 4)
     // );
-    // console.log("prodoct" , productRows)
+    // //console.log("prodoct" , productRows)
     // map the rows as div.row
     const carouselContent = this.state.products.map((row, idx) => (
       <div className={`carousel-item ${idx === 0 ? "active" : ""}`} key={idx}>

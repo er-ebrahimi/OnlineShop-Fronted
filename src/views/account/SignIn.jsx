@@ -25,13 +25,13 @@ function SignIn() {
     
     axios.request(config)
     .then((response) => {
-      console.log("login sucessfully",response.data);
+      //console.log("login sucessfully",response.data);
       localStorage.setItem("authTokens", JSON.stringify(response.data));
       Navigate("/");
 
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
       alert("error");
     });
   };
