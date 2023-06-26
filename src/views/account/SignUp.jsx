@@ -15,6 +15,7 @@ function SignUpView() {
       url: apis["signup"],
       withcredentials: true,
       
+      // withcredentials: true,
       data : JSON.stringify(values)
     };
     

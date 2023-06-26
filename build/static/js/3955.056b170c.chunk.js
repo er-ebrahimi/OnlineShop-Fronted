@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunke_commerce_template=self.webpackChunke_commerce_template||[]).push([[3955],{3955:function(e,t,s){s.r(t);s(2791);var a=s(184);t.default=function(e){return(0,a.jsx)("div",{className:"card mb-3",children:(0,a.jsxs)("div",{className:"card-body fw-bold text-uppercase",children:["Filter by"," ",(0,a.jsxs)("button",{type:"reset",className:"btn btn-sm btn-light",children:[(0,a.jsx)("span",{"aria-hidden":"true",children:"\xd7"})," Clear All"]})]})})}}}]);
+//# sourceMappingURL=3955.056b170c.chunk.js.map

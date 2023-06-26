@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunke_commerce_template=self.webpackChunke_commerce_template||[]).push([[1783],{1783:function(e,c,s){s.r(c);s(2791);var a=s(3504),r=s(184);c.default=function(e){return(0,r.jsx)(a.rU,{to:e.to,children:(0,r.jsx)("div",{className:"card shadow-sm ".concat(e.className),children:(0,r.jsx)("div",{className:"card-body p-0",children:(0,r.jsx)("img",{src:e.src,className:"img-fluid rounded",alt:"..."})})})})}}}]);
+//# sourceMappingURL=1783.9c7e47de.chunk.js.map
