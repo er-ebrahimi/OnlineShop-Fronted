@@ -87,14 +87,14 @@ const CardProductList = (props) => {
             >
               <FontAwesomeIcon icon={faCartPlus} />
             </button>
-            <button
+            {/* <button
               type="button"
               className="btn btn-sm btn-outline-secondary"
               title="Add to wishlist"
               onClick={()=>(likeProduct(product.id))}
             >
               <FontAwesomeIcon icon={faHeart} />
-            </button>
+            </button> */}
           </div>
           </div>
         </div>

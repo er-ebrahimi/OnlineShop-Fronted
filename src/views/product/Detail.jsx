@@ -246,13 +246,13 @@ class ProductDetailView extends Component {
                   >
                     <FontAwesomeIcon icon={faShoppingCart} /> Buy now
                   </button> */}
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-sm btn-outline-secondary"
                     title="Add to wishlist"
                   >
                     <FontAwesomeIcon icon={faHeart} />
-                  </button>
+                  </button> */}
                 </div>
                 <div>
                   <p className="fw-bold mb-2 small">

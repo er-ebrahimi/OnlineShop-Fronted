@@ -112,13 +112,6 @@ class ProductListView extends Component {
       .request(config)
       .then((response) => {
         products = response.data;
-        // console.log("stores",response.data);
-        // const { currentPage, totalPages, pageLimit } = page;
-        // const offset = (currentPage - 1) * pageLimit;
-        // const currentProducts = products.slice(offset, offset + pageLimit);
-        // console.log("currentProducts", currentProducts);
-        // this.setState({ currentPage, currentProducts, totalPages });
-        // console.log(products)
         products = products.data;
       })
       .catch((error) => {

@@ -4,7 +4,7 @@ const Breadcrumb = () => {
   return (
     <nav aria-label="breadcrumb">
       <ol className="breadcrumb rounded-0">
-        <li className="breadcrumb-item">
+        {/* <li className="breadcrumb-item">
           <Link to="/" title="Home">
             Home
           </Link>
@@ -16,7 +16,7 @@ const Breadcrumb = () => {
         </li>
         <li className="breadcrumb-item active" aria-current="page">
           Products
-        </li>
+        </li> */}
       </ol>
     </nav>
   );

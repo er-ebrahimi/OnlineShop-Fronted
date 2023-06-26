@@ -30,8 +30,6 @@ const NotFoundView = lazy(() => import("./views/pages/404"));
 const InternalServerErrorView = lazy(() => import("./views/pages/500"));
 const ContactUsView = lazy(() => import("./views/pages/ContactUs"));
 const SupportView = lazy(() => import("./views/pages/Support"));
-const BlogView = lazy(() => import("./views/blog/Blog"));
-const BlogDetailView = lazy(() => import("./views/blog/Detail"));
 const Stores = lazy(() => import("./views/store/Stores"));
 function App() {
   return (
@@ -85,7 +83,7 @@ function App() {
               />
               <Route exact path="/star/zone" element={<StarZoneView />} />
               <Route exact path="/cart" element={<CartView />} />
-              <Route exact path="/checkout" element={<CheckoutView />} />
+              {/* <Route exact path="/checkout" element={<CheckoutView />} /> */}
               <Route exact path="/invoice" element={<InvoiceView />} />
               <Route
                 exact
@@ -94,9 +92,7 @@ function App() {
               />
               <Route exact path="/contact-us" element={<ContactUsView />} />
               <Route exact path="/support" element={<SupportView />} />
-              <Route exact path="/blog" element={<BlogView />} />
               <Route exact path="/stores" element={<Stores />} />
-              <Route exact path="/blog/detail" element={<BlogDetailView />} />
               <Route exact path="/500" element={<InternalServerErrorView />} />
               <Route path="*" element={<NotFoundView />} />
             </Routes>

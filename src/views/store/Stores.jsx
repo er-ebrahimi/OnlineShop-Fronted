@@ -126,11 +126,29 @@ class Stores extends Component {
 
   getProducts = () => {
     let products = data.products;
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
+    // let products = data.products;
+
+    const token = JSON.parse(localStorage.getItem("authTokens")).access;
+    // console.log("token", token);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      // url: apis["product"]["list"]+ this.props.param.id + '/',
+      url: apis["store"]["list"],  
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        products = response.data;
+        products = products.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     return products;
   };
 

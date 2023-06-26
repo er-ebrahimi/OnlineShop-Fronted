@@ -88,15 +88,6 @@ const SignUpForm = (props) => {
         required={true}
       />
 
-      <Field
-        name="gender"
-        type="gender"
-        label="Gender"
-        component={renderFormField}
-        validate={[required]}
-        required={true}
-      />
-
       
 
       <Field

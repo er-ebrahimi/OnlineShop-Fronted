@@ -44,7 +44,7 @@ const TopMenu = () => {
                     Sign Up
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
@@ -56,17 +56,8 @@ const TopMenu = () => {
                   <Link className="dropdown-item" to="/contact-us">
                     Contact Us
                   </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/blog">
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/blog/detail">
-                    Blog Detail
-                  </Link>
-                </li>
+                </li> */}
+                
                 <li>
                   <hr className="dropdown-divider" />
                 </li>

@@ -33,9 +33,9 @@ const Header = () => {
               <div className="position-relative d-inline me-3">
                 <Link to="/cart" className="btn btn-primary">
                   <IconCart3 className="i-va" />
-                  <div className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-circle">
+                  {/* <div className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-circle">
                     2
-                  </div>
+                  </div> */}
                 </Link>
               </div>
               <div className="btn-group">
@@ -51,11 +51,11 @@ const Header = () => {
                 </button>
                 <ul className="dropdown-menu">
                   <li>
-                    <Link className="dropdown-item" to="/account/profile">
-                      <IconPersonBadgeFill /> My Profile
+                    <Link className="dropdown-item" to="/Stores">
+                      <IconPersonBadgeFill /> My Stores
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link className="dropdown-item" to="/star/zone">
                       <IconStarFill className="text-warning" /> Star Zone
                     </Link>
@@ -82,27 +82,16 @@ const Header = () => {
                     <Link className="dropdown-item" to="/support">
                       <IconInfoCircleFill className="text-success" /> Support
                     </Link>
-                  </li>
+                  </li> */}
+                  
                   <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/">
+                    {/* <Link className="dropdown-item" to="/">
                       <IconDoorClosedFill className="text-danger" /> Logout
-                    </Link>
+                    </Link> */}
                   </li>
                 </ul>
               </div>
-              <a
-                href="https://www.buymeacoffee.com/bhaumik"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                  alt="BuyMeACoffee" width="120"
-                />
-              </a>
+              
             </div>
           </div>
         </div>

@@ -147,34 +147,24 @@ class MyProducts extends Component {
   
   getProducts = () => {
     let products = data.products;
-    const tokenJson = localStorage.getItem("authTokens");
-    const tokenClass = JSON.parse(tokenJson);
-    const token = tokenClass.access;
-    // console.log("token", token);
+    const token = JSON.parse(localStorage.getItem("authTokens")).access;
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: apis["store"]["list"],
+      url: apis["product"]["list"],  
       headers: {
         Authorization: "Bearer " + token,
       },
-      data: data,
     };
-
     axios
       .request(config)
       .then((response) => {
-        // console.log(JSON.stringify(response.data));
-        products = JSON.stringify(response.data)
+        products = response.data;
+        products = products.data;
       })
       .catch((error) => {
         console.log(error);
       });
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
     return products;
   };
 
@@ -216,7 +206,7 @@ class MyProducts extends Component {
                   </span>
                 </div>
                 <div className="col-5 d-flex justify-content-end">
-                  <select
+                  {/* <select
                     className="form-select mw-180 float-start"
                     aria-label="Default select"
                   >
@@ -225,7 +215,7 @@ class MyProducts extends Component {
                     <option value={3}>Trending</option>
                     <option value={4}>Price low to high</option>
                     <option value={4}>Price high to low</option>
-                  </select>
+                  </select> */}
                   <div className="btn-group ms-3" role="group">
                     <button
                       aria-label="Grid"
