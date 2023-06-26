@@ -113,7 +113,7 @@ class MyProducts extends Component {
       method: "get",
       maxBodyLength: Infinity,
       // url: apis["product"]["list"]+ this.props.param.id + '/',
-      url: apis["product"]["list"],  
+      url: apis["product"]["bystore"]+ this.props.param.id + '/',  
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -124,7 +124,7 @@ class MyProducts extends Component {
       .request(config)
       .then((response) => {
         products = response.data;
-        // console.log("stores",response.data);
+        console.log("stores",response.data);
         const { currentPage, totalPages, pageLimit } = page;
         const offset = (currentPage - 1) * pageLimit;
         const currentProducts = products.slice(offset, offset + pageLimit);

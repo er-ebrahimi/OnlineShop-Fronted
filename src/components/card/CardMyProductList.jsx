@@ -8,7 +8,7 @@ import {
   faHeart,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { apis } from "../API/api";
+import { apis, domain } from "../API/api";
 import axios from "axios";
 import { Add } from "../../functions/addToBasket";
 const CardMyProductList = (props) => {
@@ -45,7 +45,7 @@ const CardMyProductList = (props) => {
     <div className="card">
       <div className="row g-0">
         <div className="col-md-3 text-center">
-          <img src={product.image} className="img-fluid" alt="..." />
+          <img src={domain + product.image} className="img-fluid" alt="..." />
         </div>
         <div className="col-md-6">
           <div className="card-body">

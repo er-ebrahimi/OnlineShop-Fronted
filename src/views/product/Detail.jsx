@@ -12,6 +12,7 @@ import { data } from "../../data";
 import { withHooksHOC } from "../../functions/MyProductsFunc";
 import axios from "axios";
 import { apis } from "../../components/API/api";
+import { Add } from "../../functions/addToBasket";
 const CardFeaturedProduct = lazy(() =>
   import("../../components/card/CardFeaturedProduct")
 );
@@ -35,20 +36,30 @@ class ProductDetailView extends Component {
       product:{},
       isLoading: true,
       error: null,
+      quantity: 0,
     };
+  }
+  quantity = ( upDown) => {
+    console.log("hello")
+    if (upDown) {
+      this.setState({quantity: this.state.quantity + 1})
+    }else{
+      this.setState({quantity: this.state.quantity - 1})
+
+    }
   }
   componentDidMount() {
     const { param } = this.props;
-    const tokenJson = localStorage.getItem("authTokens");
-    const tokenClass = JSON.parse(tokenJson);
-    const token = tokenClass.access;
+    // const tokenJson = localStorage.getItem("authTokens");
+    // const tokenClass = JSON.parse(tokenJson);
+    // const token = tokenClass.access;
     // console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
       url: apis["product"]["show"] + param.id + "/",
       headers: {
-        Authorization: "Bearer " + token,
+        // Authorization: "Bearer " + token,
       },
       // data: data,
     };
@@ -86,7 +97,7 @@ class ProductDetailView extends Component {
     return (
       <div className="container-fluid mt-3">
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-10">
             <div className="row mb-3">
               <div className="col-md-5 text-center">
                 <img
@@ -216,15 +227,19 @@ class ProductDetailView extends Component {
                       <button
                         className="btn btn-primary text-white"
                         type="button"
+                        onClick={()=>{this.quantity(false)}}
                       >
                         <FontAwesomeIcon icon={faMinus} />
                       </button>
                       <input
                         type="text"
                         className="form-control"
-                        defaultValue="1"
-                      />
+                        // defaultValue="1"
+                        value={this.state.quantity}
+                        
+                        />
                       <button
+                        onClick={()=>{this.quantity(true)}}
                         className="btn btn-primary text-white"
                         type="button"
                       >
@@ -236,7 +251,9 @@ class ProductDetailView extends Component {
                     type="button"
                     className="btn btn-sm btn-primary me-2"
                     title="Add to cart"
+                    onClick={() => {Add(product.id , this.state.quantity)}}
                   >
+                    {/* {console.log(product.id)} */}
                     <FontAwesomeIcon icon={faCartPlus} /> Add to cart
                   </button>
                   {/* <button
@@ -283,7 +300,7 @@ class ProductDetailView extends Component {
                     >
                       Details
                     </a>
-                    <a
+                    {/* <a
                       className="nav-link"
                       id="nav-randr-tab"
                       data-bs-toggle="tab"
@@ -326,7 +343,7 @@ class ProductDetailView extends Component {
                       aria-selected="false"
                     >
                       Size Chart
-                    </a>
+                    </a> */}
                   </div>
                 </nav>
                 <div className="tab-content p-3 small" id="nav-tabContent">
@@ -336,9 +353,9 @@ class ProductDetailView extends Component {
                     role="tabpanel"
                     aria-labelledby="nav-details-tab"
                   >
-                    <Details />
+                    <Details info={product.bio}/>
                   </div>
-                  <div
+                  {/* <div
                     className="tab-pane fade"
                     id="nav-randr"
                     role="tabpanel"
@@ -375,14 +392,14 @@ class ProductDetailView extends Component {
                     aria-labelledby="nav-size-chart-tab"
                   >
                     <SizeChart />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
           </div>
           <div className="col-md-4">
-            <CardFeaturedProduct data={data.products} />
-            <CardServices />
+            {/* <CardFeaturedProduct data={data.products} /> */}
+            {/* <CardServices /> */}
           </div>
         </div>
       </div>

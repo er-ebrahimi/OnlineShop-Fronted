@@ -49,19 +49,11 @@ class ProductListView extends Component {
 
   onPageChanged = async (page) =>  {
     let products = this.getProducts();
-    // console.log("products", products)
-    // console.log("page", page)
-    const tokenJson = localStorage.getItem("authTokens");
-    const tokenClass = JSON.parse(tokenJson);
-    const token = tokenClass.access;
-    // console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      // url: apis["product"]["list"]+ this.props.param.id + '/',
       url: apis["product"]["list"],  
       headers: {
-        Authorization: "Bearer " + token,
       },
     };
 
@@ -92,9 +84,6 @@ class ProductListView extends Component {
   
   getProducts = () => {
     let products = data.products;
-    const tokenJson = localStorage.getItem("authTokens");
-    const tokenClass = JSON.parse(tokenJson);
-    const token = tokenClass.access;
     // console.log("token", token);
     let config = {
       method: "get",
@@ -102,7 +91,7 @@ class ProductListView extends Component {
       // url: apis["product"]["list"]+ this.props.param.id + '/',
       url: apis["product"]["list"],  
       headers: {
-        Authorization: "Bearer " + token,
+        // Authorization: "Bearer " + token,
       },
     };
 

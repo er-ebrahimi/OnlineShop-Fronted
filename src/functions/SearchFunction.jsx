@@ -18,9 +18,9 @@ export const searchFunction = (Component) => {
     //   console.log("location", location);
 
     const fetchData = async (query) => {
-      const tokenJson = localStorage.getItem("authTokens");
-      const tokenClass = JSON.parse(tokenJson);
-      const token = tokenClass.access;
+      // const tokenJson = localStorage.getItem("authTokens");
+      // const tokenClass = JSON.parse(tokenJson);
+      // const token = tokenClass.access;
       // console.log("token", token);
 
       let config = {
@@ -28,7 +28,7 @@ export const searchFunction = (Component) => {
         maxContentLength: Infinity, // changed from maxBodyLength to maxContentLength
         url: apis["product"]["search"]+query,
         headers: {
-          Authorization: "Bearer " + token,
+          // Authorization: "Bearer " + token,
           "Content-Type": "multipart/form-data", // added content type header
         },
         

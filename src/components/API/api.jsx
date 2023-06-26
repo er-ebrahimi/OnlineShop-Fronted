@@ -15,6 +15,7 @@ export const apis = {
         "delete" : `${domain}/product/delete/`,
         "search" : `${domain}/product/search/?search=`,
         "categories": `${domain}/product/categories/`,
+        "bystore" : `${domain}/product/bystore/`,
     },
     "basket" : {
         "create" : `${domain}/basket/create/`,

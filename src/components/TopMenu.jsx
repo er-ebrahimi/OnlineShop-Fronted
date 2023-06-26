@@ -94,7 +94,7 @@ const TopMenu = () => {
                   // console.log(info.change)
                 }}
               >
-                Cloth
+                Clothes
               </Link>
             </li>
             <li className="nav-item">

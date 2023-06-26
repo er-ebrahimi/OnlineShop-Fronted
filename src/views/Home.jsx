@@ -41,16 +41,13 @@ class HomeView extends Component {
 
   componentDidMount() {
     // this.getProducts();
-    const tokenJson = localStorage.getItem("authTokens");
-    const tokenClass = JSON.parse(tokenJson);
-    const token = tokenClass.access;
     // console.log("token", token);
     let config = {
       method: "get",
       maxBodyLength: Infinity,
       url: apis["product"]["list"],
       headers: {
-        Authorization: "Bearer " + token,
+        // Authorization: "Bearer " + token,
       },
       
     };

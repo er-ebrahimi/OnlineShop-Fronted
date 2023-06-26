@@ -6,6 +6,7 @@ import { faCartPlus, faHeart, faTrash } from "@fortawesome/free-solid-svg-icons"
 import axios from "axios";
 import { apis } from "../API/api";
 import { Add } from "../../functions/addToBasket";
+import { domain } from "../API/api";
 const CardMyProductGrid = (props) => {
     const onProductsDeleted = props.onProductsDeleted;
 
@@ -39,7 +40,7 @@ const CardMyProductGrid = (props) => {
   return (
     <div className="card">
       {/* {console.log("product", product)} */}
-      <img src={product.image} className="card-img-top" alt="..." />
+      <img src={domain + product.image} className="card-img-top" alt="..." />
       {product.isNew && (
         <span className="badge bg-success position-absolute mt-2 ms-2">
           New
