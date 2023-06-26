@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { apis } from "../API/api";
 
 const CardIcon = (props) => {
   return (
@@ -8,11 +9,17 @@ const CardIcon = (props) => {
         <div className="card-body d-flex flex-column justify-content-between shadow">
           <div className="m-3">{props.children}</div>
           <div className="">
-            <h6 className="card-title text-capitalize">{props.title}</h6>
+            <h2 className="card-title text-capitalize">{props.title}</h2>
             <div className="card-text text-success">{props.text}</div>
             <small className="text-muted">{props.tips}</small>
           </div>
-          <button className="btn btn-primary">Go</button>
+          <Link
+          className="btn btn-primary"
+          to={"/product/show/" + props.id}
+
+          >
+           Go
+          </Link>
         </div>
       </div>
     </div>

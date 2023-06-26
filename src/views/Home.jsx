@@ -10,6 +10,8 @@ import { ReactComponent as IconDisplay } from "bootstrap-icons/icons/display.svg
 import { ReactComponent as IconHdd } from "bootstrap-icons/icons/hdd.svg";
 import { ReactComponent as IconUpcScan } from "bootstrap-icons/icons/upc-scan.svg";
 import { ReactComponent as IconTools } from "bootstrap-icons/icons/tools.svg";
+import axios from "axios";
+import { apis } from "../components/API/api";
 
 const Support = lazy(() => import("../components/Support"));
 const Banner = lazy(() => import("../components/carousel/Banner"));
@@ -33,35 +35,76 @@ class HomeView extends Component {
     IconTools: IconTools,
   };
 
+  state = {
+    products: [[]],
+  };
+
+  componentDidMount() {
+    // this.getProducts();
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: apis["product"]["list"],
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log("response", response.data);
+        const iconProducts =  response.data;
+        const rows = [...Array(Math.ceil(iconProducts.length / 4))];
+        // chunk the products into the array of rows
+        const productRows = rows.map((row, idx) =>
+        iconProducts.slice(idx * 4, idx * 4 + 4)
+        );
+        this.setState({ products:productRows });
+        console.log("prodoct", productRows);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
-    const iconProducts = data.iconProducts;
-    const rows = [...Array(Math.ceil(iconProducts.length / 4))];
-    // chunk the products into the array of rows
-    const productRows = rows.map((row, idx) =>
-      iconProducts.slice(idx * 4, idx * 4 + 4)
-    );
+    // const iconProducts = data.iconProducts;
+    // const rows = [...Array(Math.ceil(iconProducts.length / 4))];
+    // // chunk the products into the array of rows
+    // const productRows = rows.map((row, idx) =>
+    //   iconProducts.slice(idx * 4, idx * 4 + 4)
+    // );
+    // console.log("prodoct" , productRows)
     // map the rows as div.row
-    const carouselContent = productRows.map((row, idx) => (
+    const carouselContent = this.state.products.map((row, idx) => (
       <div className={`carousel-item ${idx === 0 ? "active" : ""}`} key={idx}>
         <h2 className="mx-4 mt-4">Most</h2>
         <div className="row g-3 m-3">
           {row.map((product, idx) => {
             const ProductImage = this.components[product.img];
             return (
-              <div key={idx} className="col-md-3 mb-4 h-4" style={{height:"20rem"}}>
+              <div key={idx} className="col-md-3 mb-4 h-4" style={{height:"25rem"}}>
                 <CardIcon
                   title={product.title}
                   text={product.text}
                   tips={product.tips}
                   to={product.to}
                   style={{ height: "200px" }}
+                  id={product.id}
+                  // minWidth="w-100"
                 >
                   {/* <ProductImage
                     className={product.cssClass}
                     width="80"
                     height="80"
                   /> */}
-                  <img src="../../images/banner/lap.png" alt="" style={{height:"150px"}} className="img-fluid w-100"  />
+                  <img src={product.image} alt="" style={{height:"18rem"}} className="img-fluid w-100"  />
                 </CardIcon>
               </div>
             );
