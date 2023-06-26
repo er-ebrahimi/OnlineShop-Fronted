@@ -93,15 +93,6 @@ const AddProduct = (props) => {
         required={true}
       />
       <Field
-        name="type"
-        type="type"
-        label="type"
-        component={renderFormField}
-        placeholder="type"
-        validate={[required]}
-        required={true}
-      />
-      <Field
         name="amount"
         type="number"
         label="amount"
@@ -119,6 +110,15 @@ const AddProduct = (props) => {
         validate={[required, digit]}
         required={true}
       />
+      <select className="btn  mt-4 border text-center" onChange={props.handleSelectChange}
+      >
+        <option value="other" className="text-center">Other</option>
+        <option value="mobile">Mobile</option>
+        <option value="laptop">Laptop</option>
+        <option value="electronic">Electronic</option>
+        <option value="furniture">Furniture</option>
+        <option value="cloth">Cloth</option>
+      </select>
       <Field
         name="Image"
         type="file"
@@ -137,7 +137,6 @@ const AddProduct = (props) => {
           Create
         </button>
       </div>
-
     </form>
   );
 };

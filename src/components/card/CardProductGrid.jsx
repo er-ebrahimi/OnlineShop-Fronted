@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ReactComponent as IconStarFill } from "bootstrap-icons/icons/star-fill.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { Add } from "../../functions/addToBasket";
 
 const CardProductGrid = (props) => {
   const product = props.data;
@@ -53,6 +54,8 @@ const CardProductGrid = (props) => {
             type="button"
             className="btn btn-sm btn-primary"
             title="Add to cart"
+            onClick={()=>(Add(product.id, 1))}
+
           >
             <FontAwesomeIcon icon={faCartPlus} />
           </button>

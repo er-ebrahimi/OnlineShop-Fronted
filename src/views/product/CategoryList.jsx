@@ -92,12 +92,41 @@ class ProductListView extends Component {
   
   getProducts = () => {
     let products = data.products;
-    
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
-    products = products.concat(products);
+    const tokenJson = localStorage.getItem("authTokens");
+    const tokenClass = JSON.parse(tokenJson);
+    const token = tokenClass.access;
+    // console.log("token", token);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      // url: apis["product"]["list"]+ this.props.param.id + '/',
+      url: apis["product"]["list"],  
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        products = response.data;
+        // console.log("stores",response.data);
+        // const { currentPage, totalPages, pageLimit } = page;
+        // const offset = (currentPage - 1) * pageLimit;
+        // const currentProducts = products.slice(offset, offset + pageLimit);
+        // console.log("currentProducts", currentProducts);
+        // this.setState({ currentPage, currentProducts, totalPages });
+        console.log(products)
+        products = products.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // products = products.concat(products);
+    // products = products.concat(products);
+    // products = products.concat(products);
+    // products = products.concat(products);
+    // products = products.concat(products);
     return products;
   };
 
@@ -113,7 +142,7 @@ class ProductListView extends Component {
         >
           <div className="container text-center">
             <span className="display-5 px-3 bg-white rounded shadow">
-              T-Shirts
+              Products
             </span>
           </div>
         </div>
@@ -121,35 +150,17 @@ class ProductListView extends Component {
         <div className="container-fluid mb-3">
           <div className="row">
             <div className="col-md-3">
-              {/* <FilterCategory /> */}
               <FilterPrice setSearchQuery={this.props.setSearchQuery} setChanger={this.props.setChanger} change = {this.props.change}/>
-              {/* {console.log(this.props.setSearchQuery)} */}
-              {/* <FilterSize /> */}
-              {/* <FilterStar /> */}
-              {/* <FilterColor /> */}
-              {/* <FilterClear /> */}
-              {/* <FilterTag /> */}
-              {/* <CardServices /> */}
             </div>
             <div className="col-md-9">
               <div className="row">
                 <div className="col-7">
                   <span className="align-middle fw-bold">
-                    {this.state.totalItems} results for{" "}
-                    <span className="text-warning">"t-shirts"</span>
+                    {/* {this.state.totalItems} results for{" "} */}
+                    {/* <span className="text-warning">"t-shirts"</span> */}
                   </span>
                 </div>
                 <div className="col-5 d-flex justify-content-end">
-                  <select
-                    className="form-select mw-180 float-start"
-                    aria-label="Default select"
-                  >
-                    <option value={1}>Most Popular</option>
-                    <option value={2}>Latest items</option>
-                    <option value={3}>Trending</option>
-                    <option value={4}>Price low to high</option>
-                    <option value={4}>Price high to low</option>
-                  </select>
                   <div className="btn-group ms-3" role="group">
                     <button
                       aria-label="Grid"
@@ -179,6 +190,7 @@ class ProductListView extends Component {
                 </div>
               </div>
               <hr />
+              <h3>{this.props.products.length === 0 ? "empty" : ""}</h3>
               <div className="row g-3">
                 {this.state.view === "grid" &&
                   this.props.products.map((product, idx) => {

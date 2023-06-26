@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { apis } from "../API/api";
 import axios from "axios";
+import { Add } from "../../functions/addToBasket";
 const CardMyProductList = (props) => {
   const onProductsDeleted = props.onProductsDeleted;
 
@@ -115,6 +116,8 @@ const CardMyProductList = (props) => {
                 type="button"
                 className="btn btn-sm btn-primary"
                 title="Add to cart"
+              onClick={()=>(Add(product.id, 1))}
+
               >
                 <FontAwesomeIcon icon={faCartPlus} />
               </button>

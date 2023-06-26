@@ -49,7 +49,7 @@ const SignInForm = (props) => {
         validate={[required, maxLength20, minLength8]}
         required={true}
         maxLength="20"
-        minLength="8"
+        // minLength="8"
         className="mb-3"
       />
       <div className="d-grid">

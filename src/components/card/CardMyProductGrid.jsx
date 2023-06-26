@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { apis } from "../API/api";
+import { Add } from "../../functions/addToBasket";
 const CardMyProductGrid = (props) => {
     const onProductsDeleted = props.onProductsDeleted;
 
@@ -37,6 +38,7 @@ const CardMyProductGrid = (props) => {
   const product = props.data;
   return (
     <div className="card">
+      {/* {console.log("product", product)} */}
       <img src={product.image} className="card-img-top" alt="..." />
       {product.isNew && (
         <span className="badge bg-success position-absolute mt-2 ms-2">
@@ -82,6 +84,8 @@ const CardMyProductGrid = (props) => {
             type="button"
             className="btn btn-sm btn-primary"
             title="Add to cart"
+            onClick={()=>(Add(product.id, 1))}
+            
           >
             <FontAwesomeIcon icon={faCartPlus} />
           </button>

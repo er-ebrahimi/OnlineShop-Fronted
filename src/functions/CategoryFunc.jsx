@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { apis } from "../components/API/api";
 import React from "react";
+import { useInfo } from "../context/Infocontext";
 export const categoryFunc = (Component) => {
   return (props) => {
     const location = useLocation();
@@ -12,10 +13,11 @@ export const categoryFunc = (Component) => {
     const [change, setChanger] = React.useState(false)
     // console.log("searchQuery", searchQuery);
     const [products, setProducts] = useState([]);
+    const { info, changeInfo } = useInfo();
     useEffect(() => {
       console.log("fetch data");
       fetchData(searchQuery);
-    }, [searchQuery,change]);
+    }, [searchQuery,change,info]);
     function setSearchQuery(props){
       setSearchQuery1(props);
       console.log("searchQuery in func", searchQuery);

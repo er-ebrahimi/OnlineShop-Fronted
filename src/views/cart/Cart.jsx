@@ -8,7 +8,8 @@ import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { apis } from "../../components/API/api";
+import { apis, domain } from "../../components/API/api";
+import { Add } from "../../functions/addToBasket";
 const CouponApplyForm = lazy(() =>
   import("../../components/others/CouponApplyForm")
 );
@@ -18,10 +19,60 @@ class CartView extends Component {
     super();
     this.state = {
       currentProducts: [],
+      total: "",
     };
+  }
+  quantity = (id, upDown) => {
+    console.log("id", id)
+    let temp = this.state.currentProducts.map((product) => {
+      if (product.id === id) {
+        if(upDown){
+          Add(product.product.id, 1);
+          return {...product, quantity: product.quantity + 1}
+        }
+        else{
+          Add(product.product.id, -1);
+          return {...product, quantity: product.quantity - 1}
+        }
+        
+      }
+      else
+      return product;
+    });
+    console.log(temp)
+    this.setState({ currentProducts: temp });
   }
   onSubmitApplyCouponCode = async (values) => {
     alert(JSON.stringify(values));
+  };
+
+  onDelete = (id,productId,qunit) => {
+    let temp = this.state.currentProducts.filter((product) => {
+      return product.id !== id;
+    });
+    this.setState({ currentProducts: temp });
+    const token = JSON.parse(localStorage.getItem("authTokens")).access;
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: apis["basket"]["delete"],
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: {
+        product_id: productId,
+        quantity: qunit,
+      },
+    };
+    console.log("config", config);
+    axios
+      .request(config)
+      .then((response) => {
+        console.log("id", response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   onProductsChanged = (products) => {
@@ -31,14 +82,11 @@ class CartView extends Component {
   };
 
   componentDidMount() {
-    const tokenJson = localStorage.getItem("authTokens");
-    const tokenClass = JSON.parse(tokenJson);
-    const token = tokenClass.access;
-    // console.log("token", token);
+    const token = JSON.parse(localStorage.getItem("authTokens")).access;
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: apis["basket"]["list"],
+      url: apis["basket"]["show"],
       headers: {
         Authorization: "Bearer " + token,
         
@@ -49,9 +97,8 @@ class CartView extends Component {
     .request(config)
     .then((response) => {
       console.log(response.data);
-      this.setState({ currentProducts: response.data })
-      console.log("currentProducts", this.state);
-      
+      this.setState({ currentProducts: response.data.products , total: response.data.total_price})
+      console.log("resoponse", this.state);
       })
       .catch((error) => {
         console.log(error);
@@ -83,16 +130,16 @@ class CartView extends Component {
                     </thead>
                     <tbody>
                       {
-                        /* map */
                         this.state.currentProducts.map((product, index) => (
                           <tr key={index}>
                             <td>
                               <div className="row">
                                 <div className="col-3 d-none d-md-block">
                                   <img
-                                    src="../../images/products/tshirt_red_480x400.webp"
+                                    src={domain + product.product.image}
                                     width="80"
                                     alt="..."
+                                    className="img-fluid rounded "
                                   />
                                 </div>
                                 <div className="col">
@@ -100,10 +147,10 @@ class CartView extends Component {
                                     to="/product/detail"
                                     className="text-decoration-none"
                                   >
-                                    Another name of some product goes just here
+                                    {product.product.name}
                                   </Link>
                                   <p className="small text-muted">
-                                    Size: XL, Color: blue, Brand: XYZ
+                                    {product.product.bio}
                                   </p>
                                 </div>
                               </div>
@@ -113,33 +160,37 @@ class CartView extends Component {
                                 <button
                                   className="btn btn-primary text-white"
                                   type="button"
+                                  onClick={() => this.quantity(product.id, false)}
                                 >
                                   <FontAwesomeIcon icon={faMinus} />
                                 </button>
                                 <input
                                   type="text"
                                   className="form-control"
-                                  defaultValue="1"
+                                  value={product.quantity}
                                 />
                                 <button
                                   className="btn btn-primary text-white"
                                   type="button"
+                                  onClick={() => this.quantity(product.id, true)}
+                                  
                                 >
                                   <FontAwesomeIcon icon={faPlus} />
                                 </button>
                               </div>
                             </td>
                             <td>
-                              <var className="price">$237.00</var>
+                              <var className="price">
+                                {product.product.price}
+                              </var>
                               <small className="d-block text-muted">
-                                $79.00 each
                               </small>
                             </td>
                             <td className="text-end">
-                              <button className="btn btn-sm btn-outline-secondary me-2">
+                              {/* <button className="btn btn-sm btn-outline-secondary me-2">
                                 <IconHeartFill className="i-va" />
-                              </button>
-                              <button className="btn btn-sm btn-outline-danger">
+                              </button> */}
+                              <button className="btn btn-sm btn-outline-danger" onClick={() => {this.onDelete(product.id, product.product.id , product.quantity)}}>
                                 <IconTrash className="i-va" />
                               </button>
                             </td>
@@ -218,37 +269,32 @@ class CartView extends Component {
                   </Link>
                 </div>
               </div>
-              <div className="alert alert-success mt-3">
-                <p className="m-0">
-                  <IconTruck className="i-va me-2" /> Free Delivery within 1-2
-                  weeks
-                </p>
-              </div>
+              
             </div>
             <div className="col-md-3">
               <div className="card mb-3">
                 <div className="card-body">
-                  <CouponApplyForm onSubmit={this.onSubmitApplyCouponCode} />
+                  {/* <CouponApplyForm onSubmit={this.onSubmitApplyCouponCode} /> */}
                 </div>
               </div>
               <div className="card">
                 <div className="card-body">
                   <dl className="row border-bottom">
                     <dt className="col-6">Total price:</dt>
-                    <dd className="col-6 text-end">$1,568</dd>
-
+                    <dd className="col-6 text-end">{this.state.total}$</dd>
+                      {console.log("this state product",this.state.total)}
                     <dt className="col-6 text-success">Discount:</dt>
-                    <dd className="col-6 text-success text-end">-$58</dd>
+                    <dd className="col-6 text-success text-end">0</dd>
                     <dt className="col-6 text-success">
                       Coupon:{" "}
                       <span className="small text-muted">EXAMPLECODE</span>{" "}
                     </dt>
-                    <dd className="col-6 text-success text-end">-$68</dd>
+                    <dd className="col-6 text-success text-end">0</dd>
                   </dl>
                   <dl className="row">
                     <dt className="col-6">Total:</dt>
                     <dd className="col-6 text-end  h5">
-                      <strong>$1,350</strong>
+                      <strong>{this.state.total}$</strong>
                     </dd>
                   </dl>
                   <hr />

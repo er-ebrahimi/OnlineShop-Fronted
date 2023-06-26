@@ -5,6 +5,8 @@ import { ReactComponent as IconTruckFill } from "bootstrap-icons/icons/truck.svg
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { apis } from "../API/api";
+import { Add } from "../../functions/addToBasket";
+import {likeProduct} from "../../functions/likeProduct";
 const CardProductList = (props) => {
   const product = props.data;
   // console.log("product", product)
@@ -17,7 +19,7 @@ const CardProductList = (props) => {
         <div className="col-md-6">
           <div className="card-body">
             <h6 className="card-subtitle me-2 d-inline">
-              <Link to={apis["product"]["product"] + product.id} className="text-decoration-none">
+              <Link to={"/product/show/" + product.id} className="text-decoration-none h1">
                 {product.name}
               </Link>
             </h6>
@@ -81,6 +83,7 @@ const CardProductList = (props) => {
               type="button"
               className="btn btn-sm btn-primary"
               title="Add to cart"
+              onClick={()=>(Add(product.id, 1))}
             >
               <FontAwesomeIcon icon={faCartPlus} />
             </button>
@@ -88,6 +91,7 @@ const CardProductList = (props) => {
               type="button"
               className="btn btn-sm btn-outline-secondary"
               title="Add to wishlist"
+              onClick={()=>(likeProduct(product.id))}
             >
               <FontAwesomeIcon icon={faHeart} />
             </button>

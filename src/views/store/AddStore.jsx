@@ -109,6 +109,7 @@ const AddStore = (props) => {
         validate={[]}
         required={true}
       />
+      
       <div className="d-grid mt-4">
         <button
           type="submit"

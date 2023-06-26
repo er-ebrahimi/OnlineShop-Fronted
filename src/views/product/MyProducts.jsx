@@ -35,10 +35,14 @@ class MyProducts extends Component {
     view: "list",
     image: "",
     imageURLs: "",
+    selectedType: "other",
+  };
+  handleSelectChange = (event) => {
+    this.setState({selectedType : event.target.value});
   };
   onSubmit = async (values) => {
-    console.log("image", this.state.image);
-    console.log("image type", typeof this.state.image);
+    // console.log("image", this.state.image);
+    // console.log("image type", typeof this.state.image);
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("bio", values.bio);
@@ -46,7 +50,9 @@ class MyProducts extends Component {
     formData.append("price", values.price);
     formData.append("amount", values.amount);
     formData.append("image", this.state.image);
+    formData.append("type" , this.state.selectedType)
     console.log("formData", formData);
+    console.log("state", this.state);
     const tokenJson = localStorage.getItem("authTokens");
     const tokenClass = JSON.parse(tokenJson);
     const token = tokenClass.access;
@@ -197,7 +203,7 @@ class MyProducts extends Component {
                 <div className="card-header">
                   <span className="align-middle">Add card</span>
                   
-                   <AddProduct onChangeImage={this.onChangeImage} onSubmit={this.onSubmit} />
+                   <AddProduct onChangeImage={this.onChangeImage} onSubmit={this.onSubmit} handleSelectChange={this.handleSelectChange} />
                 </div>
               </div>
             </div>

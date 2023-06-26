@@ -1,4 +1,4 @@
-const domain = "http://141.11.107.63:8080";
+export const domain = "http://141.11.107.63:8080";
 export const apis = {
     "signup": `${domain}/user/signup/`,
     "signin": `${domain}/user/login/`,
@@ -20,6 +20,9 @@ export const apis = {
         "create" : `${domain}/basket/create/`,
         "list" : `${domain}/basket/list/`,
         "delete" : `${domain}/basket/delete/`,
+        "show" : `${domain}/basket/show/`,
+        "update" : `${domain}/basket/update/`,
     },
+    "rateproduct": `${domain}/rateproduct/`,
     
 }

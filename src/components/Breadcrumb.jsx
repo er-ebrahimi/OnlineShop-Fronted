@@ -15,7 +15,7 @@ const Breadcrumb = () => {
           </Link>
         </li>
         <li className="breadcrumb-item active" aria-current="page">
-          T-Shirts
+          Products
         </li>
       </ol>
     </nav>

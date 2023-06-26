@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { apis } from "./API/api";
-
+import { useInfo } from "../context/Infocontext";
+import { change } from "redux-form";
 const TopMenu = () => {
+  const { info, changeInfo } = useInfo();
   return (
     <nav className="navbar navbar-expand-lg p-0">
       <div className="container-fluid">
@@ -81,38 +83,75 @@ const TopMenu = () => {
               </ul>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to={"/product/categories/?type=laptop"}>
+              <Link
+                className="nav-link"
+                to={"/product/categories/?type=laptop"}
+                onClick={() => {
+                  changeInfo("change", !info.change);
+                  // console.log(info.change)
+                }}
+              >
                 Laptop
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to={apis["product"]["categories"] + ""}>
-                Supermarket
+              <Link
+                className="nav-link"
+                to={"/product/categories/?type=cloth"}
+                onClick={() => {
+                  changeInfo("change", !info.change);
+                  // console.log(info.change)
+                }}
+              >
+                Cloth
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/category?search=#">
-                Electronics
+              <Link
+                className="nav-link"
+                to="/product/categories/?type=mobile"
+                onClick={() => {
+                  changeInfo("change", !info.change);
+                  // console.log(info.change)
+                }}
+              >
+                Mobile
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/category?search=#">
+              <Link
+                className="nav-link"
+                to="/product/categories/?type=electronic"
+                onClick={() => {
+                  changeInfo("change", !info.change);
+                  // console.log(info.change)
+                }}
+              >
+                Electronic
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                to="/product/categories/?type=furniture"
+                onClick={() => {
+                  changeInfo("change", !info.change);
+                  // console.log(info.change)
+                }}
+              >
                 Furniture
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/category?search=#">
-                Garden & Outdoors
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/category?search=#">
-                Jewellery
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/documentation">
-                Documentation
+              <Link
+                className="nav-link"
+                to="/product/categories/?type=other"
+                onClick={() => {
+                  changeInfo("change", !info.change);
+                  // console.log(info.change)
+                }}
+              >
+                Other
               </Link>
             </li>
           </ul>
