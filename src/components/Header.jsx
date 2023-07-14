@@ -18,13 +18,15 @@ const Header = () => {
       <header className="p-3 ">
         <div className="container-fluid">
           <div className="row g-3">
-            <div className="col-md-3 text-center">
+            <div className="col-md-3 text-center" style={{display: "flex", flexDirection:"row", paddingLeft:"3rem"}}>
               <Link to="/">
                 <img
                   alt="logo"
-                  src="../../images/logo.webp"
+                  src="../../images/logo2.png"
+                  style={{width: "3rem"}}
                 />
               </Link>
+                <p style={{margin: "auto 0"}}>TrendyMart</p>
             </div>
             <div className="col-md-5">
               <Search />

@@ -15,8 +15,11 @@ import {
   faWindows,
   faAndroid,
 } from "@fortawesome/free-brands-svg-icons";
+import { useInfo } from "../context/Infocontext";
 
 const Footer = () => {
+  const { info, changeInfo } = useInfo();
+
   return (
     <React.Fragment>
       <footer>
@@ -63,13 +66,15 @@ const Footer = () => {
         <div className="container-fluid bg-dark text-white">
           <div className="row ">
             <div className="col-md-3 py-3">
-              <div className="h6">Company Name</div>
+              <div className="h6">Trendy Mart</div>
               <hr />
               <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book.
+                At TrendyMart, we believe that shopping should be a delightful
+                and convenient experience. We are an online marketplace
+                dedicated to providing you with an extensive range of
+                high-quality products, all in one place. Our mission is to bring
+                you the latest trends, unique finds, and exceptional customer
+                service, ensuring your satisfaction with every purchase
               </p>
             </div>
             <div className="col-md-3 py-3">
@@ -78,42 +83,55 @@ const Footer = () => {
               <ul className="list-group list-group-flush">
                 <li className="list-group-item bg-dark text-white border-light">
                   <Link
-                    to="/"
+                    to="/product/categories/?type=electronic"
                     className="text-decoration-none text-white stretched-link"
+                    onClick={() => {
+                      changeInfo("change", !info.change);
+                    }}
                   >
+
                     Electronics
                   </Link>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
                   <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
+                    to="/product/categories/?type=mobile"
+                    className="text-decoration-none text-white stretched-link nav-link"
+                    onClick={() => {
+                      changeInfo("change", !info.change);
+                    }}
                   >
                     Mobiles
                   </Link>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
                   <Link
-                    to="/"
+                    to="/product/categories/?type=furniture"
                     className="text-decoration-none text-white stretched-link"
-                  >
-                    Car & bike
+                    onClick={() => {
+                      changeInfo("change", !info.change);
+                    }}>
+                    Furniture
                   </Link>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
                   <Link
-                    to="/"
+                    to={"/product/categories/?type=cloth"}
                     className="text-decoration-none text-white stretched-link"
-                  >
-                    Super Market
+                    onClick={() => {
+                      changeInfo("change", !info.change);
+                    }}>
+                    Clothes
                   </Link>
                 </li>
                 <li className="list-group-item bg-dark text-white border-light">
                   <Link
-                    to="/"
-                    className="text-decoration-none text-white stretched-link"
-                  >
-                    Travel Cards
+                to={"/product/categories/?type=laptop"}
+                className="text-decoration-none text-white stretched-link"
+                    onClick={() => {
+                      changeInfo("change", !info.change);
+                    }}>
+                    Laptop
                   </Link>
                 </li>
               </ul>
@@ -124,7 +142,7 @@ const Footer = () => {
               <ul className="list-group list-group-flush">
                 <li className="list-group-item bg-dark text-white border-light">
                   <Link
-                    to="/"
+                    to="/product/categories/?type=furniture"
                     className="text-decoration-none text-white stretched-link"
                   >
                     Return Policy
@@ -180,7 +198,8 @@ const Footer = () => {
               <hr />
               <IconTelephone /> +1800 100 1000
               <br />
-              <IconEnvelope /> info@email.com
+              <IconEnvelope />
+              TrendyMart@email.com
             </div>
           </div>
         </div>

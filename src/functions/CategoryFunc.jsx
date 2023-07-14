@@ -28,9 +28,6 @@ export const categoryFunc = (Component) => {
     //   //console.log("location", location);
 
     const fetchData = async (query) => {
-      const tokenJson = localStorage.getItem("authTokens");
-      const tokenClass = JSON.parse(tokenJson);
-      const token = tokenClass.access;
       // //console.log("request sent");
 
       let config = {
@@ -38,7 +35,7 @@ export const categoryFunc = (Component) => {
         maxContentLength: Infinity, // changed from maxBodyLength to maxContentLength
         url: apis["product"]["categories"]+location.search,
         headers: {
-          Authorization: "Bearer " + token,
+          // Authorization: "Bearer " + token,
           "Content-Type": "multipart/form-data", // added content type header
         },
         

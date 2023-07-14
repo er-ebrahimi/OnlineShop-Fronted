@@ -261,7 +261,7 @@ class CartView extends Component {
                   </table>
                 </div>
                 <div className="card-footer">
-                  <Link to="/checkout" className="btn btn-primary float-end">
+                  <Link to="/" className="btn btn-primary float-end">
                     Make Purchase <IconChevronRight className="i-va" />
                   </Link>
                   <Link to="/" className="btn btn-secondary">

@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./App.min.css";
 import CategoryProductDetailView from "./views/product/CategoryList";
+import { Navigate } from "react-router-dom";
 import ContextInfo from "./context/Infocontext";
 //const Header = lazy(() => import("./components/Header"));
 //const TopMenu = lazy(() => import("./components/TopMenu"));
@@ -31,6 +32,10 @@ const InternalServerErrorView = lazy(() => import("./views/pages/500"));
 const ContactUsView = lazy(() => import("./views/pages/ContactUs"));
 const SupportView = lazy(() => import("./views/pages/Support"));
 const Stores = lazy(() => import("./views/store/Stores"));
+
+export const PrivatRoute = ({ children }) =>{
+  return localStorage.getItem("authTokens")? children : <Navigate to = "/account/signin" />;
+};
 function App() {
   return (
     <ContextInfo>
@@ -55,7 +60,11 @@ function App() {
               <Route
                 exact
                 path="/account/profile"
-                element={<MyProfileView />}
+                element={
+                  <PrivatRoute>
+                    <MyProfileView />
+                  </PrivatRoute>
+                }
               />
               <Route exact path="/account/orders" element={<OrdersView />} />
               <Route
@@ -70,7 +79,11 @@ function App() {
               />
               <Route exact path="/category" element={<ProductListView />} />
               <Route exact path="/search" element={<ProductListView />} />
-              <Route exact path="/myproducts/:id" element={<MyProducts />} />
+              <Route exact path="/myproducts/:id" element={
+                  <PrivatRoute>
+                    <MyProducts />
+                  </PrivatRoute>
+                } />
               <Route
                 exact
                 path="/product/show/:id"
@@ -82,7 +95,11 @@ function App() {
                 element={<CategoryProductDetailView />}
               />
               <Route exact path="/star/zone" element={<StarZoneView />} />
-              <Route exact path="/cart" element={<CartView />} />
+              <Route exact path="/cart" element={
+                  <PrivatRoute>
+                    <CartView />
+                  </PrivatRoute>
+                } />
               {/* <Route exact path="/checkout" element={<CheckoutView />} /> */}
               <Route exact path="/invoice" element={<InvoiceView />} />
               <Route
@@ -92,7 +109,11 @@ function App() {
               />
               <Route exact path="/contact-us" element={<ContactUsView />} />
               <Route exact path="/support" element={<SupportView />} />
-              <Route exact path="/stores" element={<Stores />} />
+              <Route exact path="/stores" element={
+                  <PrivatRoute>
+                    <Stores />
+                  </PrivatRoute>
+                } />
               <Route exact path="/500" element={<InternalServerErrorView />} />
               <Route path="*" element={<NotFoundView />} />
             </Routes>
