@@ -43,7 +43,7 @@ const CardProductList = (props) => {
             </div>
             {product.bio &&
               product.bio.includes("|") === false && (
-                <p className="small mt-2">{product.bio}</p>
+                <p className="small mt-2">{product.bio.length > 150 ? product.bio.slice(0,150): product.bio}</p>
               )}
             {product.bio && product.bio.includes("|") && (
               <ul className="mt-2">

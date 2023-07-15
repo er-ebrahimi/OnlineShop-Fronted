@@ -150,7 +150,7 @@ class CartView extends Component {
                                     {product.product.name}
                                   </Link>
                                   <p className="small text-muted">
-                                    {product.product.bio}
+                                  {/* {product.bio.length > 50 ? product.bio.slice(0,50): product.bio} */}
                                   </p>
                                 </div>
                               </div>

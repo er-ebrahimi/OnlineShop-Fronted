@@ -70,7 +70,7 @@ const CardStore = (props) => {
           </h2>
         </h6>
         <div className="my-2">
-          <span className=" h5">{product.bio}</span>
+          <span className=" h5">{product.bio.length > 150 ? product.bio.slice(0,150): product.bio}</span>
           {product.originPrice > 0 && (
             <del className="small text-muted ms-2">${product.originPrice}</del>
           )}
